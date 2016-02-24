@@ -2,19 +2,27 @@
 output:
   pdf_document:
     includes:
-      in_header: header.tex
+      in_header: tex/header.tex
   word_document: default
 ---
 
+```{r DocumentSetup, echo=FALSE, results='hide', include=FALSE}
+### # specify knitr options
+knitr::opts_chunk$set(echo = FALSE, results = 'asis')
 
-![Qualitas Logo](QualitasLogo.png)
+### # initialize section counter
+robjSecEnum <- rqudocuhelper::SectionEnumerator$new()
+```
+
+
+![Qualitas Logo](png/QualitasLogo.png)
 
 \fcolorbox{black}{white}{
 	\parbox[t]{1.0\linewidth}{
 		\centering \fontsize{12pt}{20pt}\selectfont % 
 		\vspace*{0.5cm} % 
 
-		\hfill Docu -Type
+		\hfill Übersetzung Spezifikation
 
 		\vspace*{0.5cm} 
 	}
@@ -26,9 +34,9 @@ output:
 	\parbox[t]{1.0\linewidth}{
 		\centering \fontsize{25pt}{40pt}\selectfont %
 		\vspace*{0.7cm}
-    Title 1    \\
-    Title 2    \\
-    Title 3    \\
+    ICAR Spezifikation       \\
+    Automatisierter Austausch\\
+    von Tierdaten    \\
 
 		\vspace*{0.7cm} % Space between the end of the title and the bottom of the grey box
 	}
@@ -37,7 +45,7 @@ output:
 \vspace*{1cm}
 
 \begin{center}
-\includegraphics[width=0.5\textwidth]{Pedigree.png}
+\includegraphics[width=0.5\textwidth]{png/Pedigree.png}
 \end{center}
 
 \vspace{5ex}
@@ -55,14 +63,26 @@ FB EDV, Qualitas AG                 \\
 
 \tableofcontents
 
+\pagebreak
 
 # Dokumentenstatus
 
-+-------------+------------------+-------+-----------------------------------------------+
-|  Version    |  Datum           |  Wer  |  Änderung                                     |
-+=============+==================+=======+===============================================+
-|  0.0.0.900  |                  |  PvR  |  Erstellung                                   |
-+-------------+------------------+-------+-----------------------------------------------+
++-------------+------------------+------------------+-------------------------------------------+
+|  Version    |  Datum           |  Wer             |  Änderung                                 |
++=============+==================+==================+===========================================+
+|  0.0.0.900  |  01.12.2015      |  Peter von Rohr  |  Erstellung                               |
++-------------+------------------+------------------+-------------------------------------------+
+|  0.0.0.901  |  09.12.2015      |  Peter von Rohr  |  Zusammenfassung erweitert bis Abschnitt  |
+|             |                  |                  |  "Zugang zur Dienstleistung"              |
++-------------+------------------+------------------+-------------------------------------------+
+|  0.0.0.902  |  16.12.2015      |  Peter von Rohr  |  Zusammenfassung erweitert bis Abschnitt  |
+|             |                  |                  |  "Lokale Anforderungen"                   |
++-------------+------------------+------------------+-------------------------------------------+
+|  0.0.0.903  |  24.02.2016      |  Pvr             |  Umstellung auf RPackage und rqudocuhelper|
++-------------+------------------+------------------+-------------------------------------------+
+|  0.0.0.904  |  24.02.2016      |  Pvr             |  Gemeinsame Komponenten                   |
++-------------+------------------+------------------+-------------------------------------------+
+
 
 \pagebreak
 
@@ -71,9 +91,653 @@ FB EDV, Qualitas AG                 \\
 +-------------+-------------------------------------------------------------------------+
 |  Abkürzung  |  Bedeutung                                                              |
 +=============+=========================================================================+
+|  ICAR       |  International Committee for Animal Recording                           |
++-------------+-------------------------------------------------------------------------+
+|  ADE        |  Animal Data Exchange                                                   |
++-------------+-------------------------------------------------------------------------+
+|  W3C        |  World Wide Web Consortium                                              |
++-------------+-------------------------------------------------------------------------+
+|  UNCEFACT   |  United Nations Center for Trade Fascilitation and Electronic Business  |
++-------------+-------------------------------------------------------------------------+
+|  ISO        |  International Organization for Standardization                         |
++-------------+-------------------------------------------------------------------------+
+|  SOAP       |  Simple Object Access Protocol                                          |
++-------------+-------------------------------------------------------------------------+
+|  REST       |  Representational state transfer                                        |
++-------------+-------------------------------------------------------------------------+
+|  ATDA       |  automatisierter Tierdatenaustausch                                     |
++-------------+-------------------------------------------------------------------------+
+|  XML        |  eXtenible Markup Language                                              |
++-------------+-------------------------------------------------------------------------+
+|  XSD        |  XML Schema Definition                                                  |
++-------------+-------------------------------------------------------------------------+
+|  WSDL       |  Web Services Description Language                                      |
++-------------+-------------------------------------------------------------------------+
+|  ADIS       |  Agricultural Data Interchange Syntax                                   |
++-------------+-------------------------------------------------------------------------+
+|  ADED       |  Agricultural Data Element Dictionary                                   |
++-------------+-------------------------------------------------------------------------+
+|  HTTP       |  Hypertext Transfer Protocol                                            |
++-------------+-------------------------------------------------------------------------+
+|  JSON       |  JavaScript Object Notation                                             |
++-------------+-------------------------------------------------------------------------+
+|  URL        |  Unified Resource Locator (Adresse einer Webseite), kann auch als       |
+|             |  URI (Unified Resource Identifier) bezeichnet                           |
++-------------+-------------------------------------------------------------------------+
+
+
+\vspace{1ex}
+# Erklärungen
+Dieses Dokument basiert auf Version 1.8 der ICAR Spezifikation ``Animal Data Exchange''. Technische Fachbegriffe wurden sinngemäss übersetzt und mit dem englischen Begriff in Klammern versehen. Diagramme wurden per Screen-shots aus dem Originaldokument kopiert und mit Zusatzinformation in Deutsch versehen. Ergänzende Bemerkungen des Übersetzers sind mit geschweiften Klammern {} gekennzeichnet.
+
+
+\vspace{1ex}
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("# Ausgangslage")
+```
+ICAR ADE steht für die Spezifikation des automatisierten Austauschs von Tierdaten von ICAR. Der Datenaustausch wird anhand von folgenden Bestandteilen definiert.
+
+1. Anforderungen (Business requirements) und technischen Spezifikationen
+2. Datenbeschreibung, welche konsistent sind mit den Empfehlungen von W3C für XML Schemas, UNCEFACT und ISO
+3. Spezifikationen von Interfaces konsistent mit den Empfehlungen von W3C für XML Schemas, UNCEFACT und ISO
+
+Die Anforderungen können unterteilt werden in 
+
+- allgemeine Anforderungen, welche für jede Art von Datenaustausch zutreffen
+- spezifische Anforderungen je nach Art des Datenaustauschs
+- Datenbeschreibungen
+
+Für einen bestimmten Datenaustausch enthalten die spezifischen Anforderungen 
+
+- den Zweck des Datenaustauschs
+- den Kontext (business context) des Datenaustauschs
+- die Anforderungen an den Datenaustausch inklusive der Beschreibung des Übermittlungsprotokolls
+
+Datenbeschriftungen beinhalten
+
+- Beschreibung des Services
+- Aufbau des Übermittlungsprotokolls
+- Beschreibung der Datenentität (entity)
+- Beschreibung einer Dateneinheit (item)
+- Beschreibung des Code-sets, d.h. der Zeichencodierung
+
+Die technische Implementation behandelt die Umsetzung der Anforderungen auf verschiedene Arten
+
+- Vordergründig sollen die Empfehlungen von W3C und UNCEFACT für Datendefinitionen und Interfacedefinitionen (SOAP) verwendet werden.
+- Alternativ können auch ISO Standards (17532 2007) für den Datenaustausch ab Hof mit stationärer Ausrüstung und REST Technologie verwendet werden.
+
+Eine Übersicht der verschiedenen Komponenten ist im folgenden Diagramm gegeben.
+
+```{r echo=FALSE, results='asis'}
+rqudocuhelper::insertOdgFigureAsPdf(psOdgFileStem = "DiagrammSpezScope")
+```
 
 
 \pagebreak
 
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("# Beschreibung des automatisierten Tierdatenaustauschs")
+```
+Dieser Abschnitt enthält folgende Punkte
 
-# Erklärung
+- Geschichte und aktueller Status betreffend des ATDA
+- Ziele des ATDA
+- Strategie zur Erreichung der Ziele des ATDA
+- Kontext des ATDA
+
+In den folgenden Unterabschnitten werden die einzelnen Punkte noch genauer beschrieben.
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("## Geschichte und aktueller Status")
+```
+Aktuell ist der ATDA zwischen Geräten und externen Informationssystem nicht möglich oder nur über spezialisierte Softwareprogramme (sogenannte Middleware) möglich. Diese Middleware basiert auf lokalen meist proprietären und veralteten Standards. Das folgende Diagramm zeigt die aktuelle Situation bezüglich ATDA
+
+```{r echo=FALSE, results='asis'}
+rqudocuhelper::insertOdgFigureAsPdf(psOdgFileStem = "OrgSpezDiagramm1")
+```
+
+Die Middleware ist teuer in der Implementation und im Unterhalt. Meistens müssen diese Systeme mit manuellen Interventionen bedient werden. Diese Middleware basierten Systeme sind häufig langsam und sind sehr aufwändig zu optimieren. Daraus folgt auch, dass die Übermittlung von grossen Datenmengen nicht möglich ist.
+
+Moderne Datenzentren machen es möglich grosse Datenmengen zuverarbeiten. Eine steigende Anzahl an Gerätschaften und Sensoren produziert eine exponentiell wachsende Menge and Daten. Diese enormen Datenmengen können nur noch durch automatisierte und standardisierte Prozesse verarbeitet werden. 
+
+Eines automatisierter Austausch von grossen Datenmengen in Echtzeit hätte die folgenden Vorteile:
+
+1. Neue Merkmale für die Selektion in Nutztierpopulationen
+2. Verbesserung der Tierüberwachung durch die Zusammenfassung von Daten von verschiedenen Quellen, wie zum Beispiel  Geräte, Labors, ...
+3. Verbesserung der Kalibrierung von Geräten zur Verbesserung der Messgenauigkeit
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("## Ziele des Tierdatenaustauschs")
+```
+Das primäre Ziel ist die Etablierung eines direkten, permanenten zuverlässigen Services zum Austausch von grossen Datenmengen zwischen Geräten und externen Informationssystemen. Der Service soll folgende Eigenschaften aufweisen: 
+
+- einfach zu implementieren
+- einfach zu betreuen
+- Kosten-effizient
+- in beiden Richtungen zwischen Gerät und Informationssystem funktionieren
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("## Strategien zur Erreichung der Ziele")
+```
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("### Inhalt des ATDA")
+```
+
+Die Ziele des ATDA können durch folgendes Framework erreicht werden  
+
+1. Architektur zur Unterstützung des Datenaustauschs
+2. Standards für Nachrichten und Daten
+3. Tools zur Erleichterung der Umsetzung (Implementation)
+4. Reaktiver Unterhaltsprozess
+
+Die vorgeschlagene Architektur basiert auf einem Service-orientierter Ansatz, in welchem das externe Informationssystem als Provider dem Gerät als Client verschiedene Services zur Verfügung stellt. Das folgende Diagramm zeigt die vorgeschlagene Modellarchitektur
+
+```{r echo=FALSE, results='asis'}
+rqudocuhelper::insertOdgFigureAsPdf(psOdgFileStem = "OrgSpezDiagramm2")
+```
+
+Die Standards beinhalten
+
+- Anforderungen und Voraussetzungen zur Verwendung des Services
+- Voraussetzungen zur Bereitstellung des Services
+- Voraussetzungen für den Datenaustausch
+- Semantische Definition der ausgetauschten Daten, d.h. die Bedeutung der Daten, inklusive der Zeichenkodierung (code set). {Die Semantik der Daten bezeichnet die Zuweisung von Bedeutungen zu den Daten}
+- Spezifikation der Syntax für die ausgetauschten Daten nach Standards von W3C, UNCEFACT und ISO. {Dies betrifft das zugelassene Format der Daten}
+- Spezifikation eines Interfaces nach den Standards von W3C, UNCEFACT und ISO. {Das Interface bezeichnet die Menge an Funktionalitäten, welche als Kunden (Clients) des Services aufgerufen werden können}
+
+Die Tools, welche die Umsetzung vereinfachen sollen, beinhalten
+
+- eine Webseite zum Download von
+    + Dateien mit XML Datentypen (XSD Dateien)
+    + Dateien zur Spezifikation des web service (WSDL Dateien)
+- eine Testplatform
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("### ADE Implementation")
+```
+
+Das nachfolgende Diagramm beschreibt den Prozess des Datenaustauschs
+
+```{r echo=FALSE, results='asis'}
+rqudocuhelper::insertOdgFigureAsPdf(psOdgFileStem = "OrgSpezDiagramm3")
+```
+
+Der oben beschriebene Prozess wird durch eine Nachfrage (business need) ausgelöst. Die Anforderungen (business requirements) sollen das Resultat einer Zusammenarbeit zwischen ICAR und Gerätehersteller sein. Diese sind unabhängig von der Technik oder Technologie, welche zur Umsetzung verwendet wird. {wahrscheinlich sind hier die Anforderungen gemeint}
+
+Zwei Arten der Umsetzung werden hier berücksichtigt
+
+1. W3C und UNCEFACT Standards, als bevorzugte Lösung
+2. ISO (17532 2007) / REST, oder andere Alternativen
+
+Die W3C Implementierung besteht aus
+
+1. Technische Beschreibung eines Datenelementes als XSD Datei basierend auf UNCEFACT Datentypen
+2. Spezifikation des Interfaces als WSDL Datei
+3. Basierend auf der WSDL
+    + Umsetzung des Clients durch den Gerätehersteller
+    + Umsetzung des Servers durch den Betreiber des Datencenters
+
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("## Kontext (Business Context)")
+```
+{In diesem Abschnitt werden die im Schema verwendeten Begriffe definiert.}
+
+Das nachfolgende Diagramm beschreibt den Kontext
+
+```{r echo=FALSE, results='asis'}
+rqudocuhelper::insertOdgFigureAsPdf(psOdgFileStem = "OrgSpezDiagramm4")
+```
+
+
+{**Begriff: Dienstleister (Service Provider)**}
+
+Organisationen {im Diagramm mit ``Service Providers'' bezeichnet und im folgenden mit Dienstleister übersetzt} stellen den Besitzern der Melkgeräte verschiedene Dienste (Services) zur Verfügung. Der Zweck dieser Dienste ist
+
+- Registrierung der Daten in einer Datenbank
+- aggregierte Informationen {basierend auf den Daten} zurückzugeben
+
+``Organisationen'' können Organisationen zur Aufzeichnung von Milchdaten, Zuchtorganisationen und andere Datenbankdienstleister sein.
+
++-------------------------------------------------------------------------------------------------------+
+|  Für den Rest dieses Dokuments werden diese Organisationen als ``Dienstleister'' (Service provider)   |
+|  bezeichnet.                                                                                          |
++-------------------------------------------------------------------------------------------------------+
+
+Der Eigentümer der Melkausrüstung und der Dienstleister müssen folgendes aushandeln
+
+- Bedingungen zur Benützung der verfügbaren Dienste
+- benötigte Parameter für den Datenaustausch
+
+Diese Punkte müssen vertraglich geregelt werden.
+
+{**Begriff: Melkausrüstung (milking equipment)**}
+
+Die Melkausrüstung besteht aus einer Sammlung von Hardware-Komponenten und aus Softwareprogrammen, welche mindestens folgende Funktionen umfassen:
+
+1. Messung der Milchmenge und von anderen Milchparametern (characteristic) {Hier ist nicht klar, was gemeint ist}
+2. Abfüllen von Milchprobenfläschchen und Registrierung der Verbindung zwischen Fläschchen und Tier
+3. Abspeichern der Melkresultate
+4. Verbinden zu, senden an und empfangen von Daten von externen Informationssystemen
+
+Die Melkausrüstung kann noch andere Funktionalitäten haben, welche von ATDA unabhängig sind. Melksysteme können als verschiedene Gerätetypen wie Roboter, elektronische Milchmesssystem, ... vorkommen. {Diese Aussage steht sehr isoliert da und mir ist nicht klar, was damit gemeint ist.}
+
++-------------------------------------------------------------------------------------------------------+
+|  Für den Rest dieses Dokuments werden Melksysteme als ``Ausrüstung'' (Equipment) bezeichnet.          |
++-------------------------------------------------------------------------------------------------------+
+
+{**Begriff: Melker / Melkoperator (milking operator)**}
+
+Die Melkausrüstung wird durch einen Melker bedient und überwacht. 
+
++-------------------------------------------------------------------------------------------------------+
+|  Für den Rest dieses Dokuments wird der Melker Melkoperator als ``Operator'' bezeichnet.              |
++-------------------------------------------------------------------------------------------------------+
+
+Der Operator ist angestellt und abhängig vom Besitzer der Melkausrüstung. Der Operator hat Berechtigung zum Ausführen folgender Tätigkeiten
+
+- Versorgung der Melkausrüstung mit Parametern für den Datenaustausch und für Milchproben {Parameter der Milchproben ist hier nicht genau umschrieben}
+- Installation und Entfernen der Milchfläschchen für die Milchproben
+- Versand von Milchprobem an Analyselabors
+
+Verschiedene Personen können die Rolle des Operators übernehmen, so zum Beispiel Bauern, Angestellte auf Bauernhöfen, Techniker von Dienstleistern.
+
+{**Begriff: Informationssystem (information system)**}
+
+Der Dienstleister betreibt ein Informationssystem, welches die Dienste anbietet. Das Informationssystem besteht aus Servern, Datenbanken und Softwareprogrammen, welche nicht Teil der Melkausrüstung sind. Das Informationssystem ist über eine Netzwerkverbindung zur Melkausrüstung verbunden. Das Informationssystem hat minimal folgende Funktionen: 
+
+1. Empfang und Verarbeitung von Anfragen des Melksystems
+2. Aktualisierung der Datenbank mit den Informationen des Melksystems
+3. Lieferung der Resultate des Milchanalyselabors, welches die vom anfragenden Melksystem gesammelten Proben analysiert hat
+
+Das Informationssystem vom Dienstleister kann andere Funktionen unabhängig von ATDA erfüllen.
+
++-------------------------------------------------------------------------------------------------------+
+|  Für den Rest dieses Dokuments wird das Informationssystem des Dienstleisters als                     | 
+|  ``Informationssystem'' bezeichnet.                                                                   |
++-------------------------------------------------------------------------------------------------------+
+
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("# Generelle Spezifikation")
+robjSecEnum$displayNumSection("## Generelle Spezifikationen des Datentransports")
+robjSecEnum$displayNumSection("### SOAP/XML Web Services")
+```
+Für den Datentransport wurde der Standard SOAP/XML Version 1.2 nach W3C gewählt. Eine Beschreibung dieses Standards ist unter http://www.w3.org/TR/2007/REC-soap12-part0-20070427/ verfügbar. Da für den Design-Prozess ein ``top-down'' Ansatz gewählt wurde, hat ICAR ADE schon Dateien mit WSDL und XSD Dateien vorgegeben, welche schon eine komplettes Set an Definitionen für den Datenaustausch bilden. Basierend auf diesen Definitionen können SOAP-Webservices erstellt werden. Die meisten modernen Programmiersprachen (wie Java, .NET {dies sollte wahrscheinlich C# heissen, weil .NET ist keine Programmiersprache für sich}) bieten Tools an, welche die Erstellung von Interface-Klassen zur Verbindung zwischen Datentransport-Layer und Prozess-Layer vereinfachen.
+
+Bei jeder Veröffentlichung einer neuen Version der ICAR ADE Spezifikationen wird ein Set von WSDL/XSD Dateien zum Download von der ICAR Webseite angeboten.
+
+Die WSDL/XSD Dateien beschreiben folgende Aspekte des Transport-Protokolls
+
+- Endpunkte des Services {Sind hier Dienstanbieter und Client gemeint?}
+- Eingabe und Ausgabe Nachrichten
+- Grundlegende Definitionen von Datentypen (XSD Typen, UNCEFACT Typen, ...)
+- Definitionen von erweiterten und zusammengesetzten Datentypen
+- Restriktionen (Constraints), d.h. Gültigkeitsbereiche von Datentypen
+
+\pagebreak
+
+Die folgende Tabelle gibt eine Übersicht über den Inhalt der angebotenen Definitionsdateien
+
++--------------------------------+-----------------------------------------------------------------------------+
+|      Dateinamen, Schema Namen  |  Beschreibung                                                               |
++================================+=============================================================================+
+|                         *.XSD  |  XML Schema Dateien, welche die Definitionen der ICAR ADE XML               |
+|                                |  Datenstrukturen enthalten                                                  |
++--------------------------------+-----------------------------------------------------------------------------+
+|                    ICAR_*.XSD  |  Definitionen von Datenelementen, welche von der ICAR ADE Grupppe erstellt  |
+|                                |  wurden                                                                     |
++--------------------------------+-----------------------------------------------------------------------------+
+|                     ISO_*.XSD  |  Definitionen von Datenelementen, welche vom ISO Standard abgeleitet wurden |
++--------------------------------+-----------------------------------------------------------------------------+
+|                   UNECE_*.XSD  |  XSD Dateien, welche vom UNCEFACT Projekt zur Verfügung gestellt werden     |
+|                                |  siehe unter http://www.unece.org/cefact/xml_schemas/index.html             |
++--------------------------------+-----------------------------------------------------------------------------+
+|  UnqualifiedDataType_13p0.XSD  |  XSD Datei, welche die Definition der unqualifizierten UNCEFACT Datentypen  |
+|                                |  enthalten. Diese Datentypen erweitern die Standard XSD Datentypen mit      |
+|                                |  zusätzlichen Attributen. Diese werden in den ICAR und UNCEFACT             |
+|                                |  Definitionen anstelle der Standard XSD-Typen verwendet.                    |
++--------------------------------+-----------------------------------------------------------------------------+
+|                      *_CODE_*  |  XSD Datei mit Definitionen von Codes                                       |
++--------------------------------+-----------------------------------------------------------------------------+
+|                  wsMrAde.wsdl  |  Beschreibung des ICAR ADE SOAP Dienstes. Diese definiert ein Set von       |
+|                                |  Nachrichten-Paaren, welche alle aus einer Anfrage und einer Antwort        |
+|                                |  bestehen                                                                   |
++--------------------------------+-----------------------------------------------------------------------------+
+|                  ADE_v1p8.xsd  |  Hauptdatei (entry point) der Definitionen der Datenstrukturen des ICAR ADE |
++--------------------------------+-----------------------------------------------------------------------------+
+
+In der ICAR ADE Spezifikation sind Definitionen von Daten und Protokollen durch die kommerzielle Software XMLSPY von ALTOVA (http://www.altova.com/documents/XMLSpyPro.pdf) illustriert. Als Beispiel wurde für den Dienst ``GetHerdListRequest'' folgendes Diagramm erstellt
+
+```{r echo=FALSE, results='asis'}
+rqudocuhelper::insertOdgFigureAsPdf(psOdgFileStem = "GetHerdListRequestDiagram")
+```
+
+Die in den Diagrammen verwendeten Symbolen haben folgende Bedeutung
+
+```{r echo=FALSE, results='asis'}
+rqudocuhelper::insertOdgFigureAsPdf(psOdgFileStem = "XMLSpyDiagSymbol")
+```
+
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("### Alternative Transport Protokolle")
+```
+Abgesehen von SOAP gibt es andere internationale Transport Protokolle. Als Beispiel gibt es den ISO-Standard  ADIS/ADED, welcher in ISO 17532(2007) beschrieben wurde. {Diese Standards wurden offenbar in [ISOagriNET](http://www.isoagrinet.org/) verwendet. ADIS ist eine Datenbeschreibungssprache und ADED ist ein Daten-Dictionary.} 
+
+Bei den Transportprotokollen hat REST basierend auf dem HTTP unter Verwendung von XML, Jason {müsste eingentlich JSON heissen} und anderen Technologien zum Datentransport eine grössere Verbreitung gefunden.
+
+Der Einfachheit halber fokussiert die ICAR Spezifikation zuerst auf SOAP/XML. Die Integration von alternativen Protokollen wird auf später verschoben.
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("### ICAR Typen und Codeliste")
+```
+Alle Datenelemente, welche durch die ICAR ADE Spezifikation erzeugt wurden können innerhalb der WSDL/XSD Dateien durch den Präfix ``icar:'' erkannt werden. Alle Datenelemente basieren auf UNCEFACT Datentypen. Eine Beschreibung dieser Datenelemente ist in den nachfolgenden Abschnitten gegeben.
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("### Externe Datenelemente")
+```
+Das Ziel des ICAR ADE Standards ist es, wo immer möglich auf andere schon vorhandene Standards von ISO, IANA oder UNCEFACT abzustützen. 
+
+**UNCEFACT Daten Typen**
+
+Die WSDL/XSD Definitionen von ICAR ADE verwenden die UNCEFACT Basisdatentypen. Die UNCEFACT Datentypen basieren auf den XSD Basistypen, wobei die XSD Typen durch zusätzliche Attribute und Restriktionen erweitert wurden. Diese sind in der Datei ``UnqualifiedDataType_13p0.xsd'' definiert. Diese Datentypen sind  mit dem Präfix ``udt:'' gekennzeichnet.
+
+Die folgenden UNCEFACT Typen werden verwendet um die Typen einer Dateneinheit (data item) zu definieren.
+
++------------------------+--------------------------+-------------------+-----------+
+|  Name                  |  Beschreibung            |  Kommentar        |  XSD Typ  |
++========================+==========================+===================+===========+
+|  udt:CodeType          |  Zeichenkette (String)   |  Code verweist    |  String   |
+|                        |  welche verwendet wird   |  auf Aufzählung   |           |
+|                        |  einen Wert              |                   |           |
+|                        |  darzustellen oder zu    |                   |           |
+|                        |  ersetzen                |                   |           |
++------------------------+--------------------------+-------------------+-----------+
+|  udt:DateType          |  spezifisches Datum      |  Repräsentation   |  String   |
+|                        |  auf der Zeitachse       |  welche aufgrund  |           |
+|                        |                          |  des Transport    |           |
+|                        |                          |  Protokolls       |           |
+|                        |                          |  definiert sind   |           |
++------------------------+--------------------------+-------------------+-----------+
+|  udt:DateTimeType      |  spezifischer Zeitpunkt  |  Repräsentation   |  String   |
+|                        |  auf der Zeitachse       |  welche aufgrund  |           |
+|                        |                          |  des Transport    |           |
+|                        |                          |  Protokolls       |           |
+|                        |                          |  definiert sind   |           |
++------------------------+--------------------------+-------------------+-----------+
+|  udt:IDType            |  String für eindeutige   |                   |  String   |
+|                        |  Identifikation einer    |                   |           |
+|                        |  Objektinstanz           |                   |           |
++------------------------+--------------------------+-------------------+-----------+
+|  udt:MeasureType       |  Numerischer Wert        |  Messungen sind   |  Dezimal  |
+|                        |  bestimmt durch die      |  mit einer        |           |
+|                        |  Messung eines Objektes  |  Einheit versehen |           |
+|                        |                          |  eine Auflösung   |           |
+|                        |                          |  und falls nötig  |           |
+|                        |                          |  ein Bereich mit  |           |
+|                        |                          |  Minimum und      |           |
+|                        |                          |  Maximum          |           |
++------------------------+--------------------------+-------------------+-----------+
+|  udt:NameType          |  Wort zur Bezeichnung    |                   |  String   |                  
+|                        |  einer Person, eines     |                   |           |
+|                        |  Ortes einer Sache oder  |                   |           |
+|                        |  eines Konzeptes         |                   |           |
++------------------------+--------------------------+-------------------+-----------+
+|  udt:BinaryObjectType  |  Base64 codierte         |  z.Bsp. für zip   |  String   |
+|                        |  binäre Daten            |  komprimierte     |           |
+|                        |                          |  Daten verwendet  |           |
++------------------------+--------------------------+-------------------+-----------+
+|  udt:TextType          |  Genereller Typ für Text |                   |  String   |
++------------------------+--------------------------+-------------------+-----------+
+|  udt:IndicatorType     |  Boolsche Variable oder  |                   |  Boolean  |
+|                        |  wahr oder falsch        |                   |           |
++------------------------+--------------------------+-------------------+-----------+
+
+
+**UNCEFACT Codierung**
+
++-----------------------------+---------------------------------------------------------------------------+
+|  Codierung                  |  Beschreibung                                                             |
++=============================+===========================================================================+
+|  AgencyIdentificationCode   |  Liste von Organisation verantwortlich für die Betreuung von Codierungen  |
+|                             |  welche als Wert des Attributs 'listAgencyID' im UNCEFACT Datentyp        |
+|                             |  udt:CodeType verwendet werden                                            |
++-----------------------------+---------------------------------------------------------------------------+
+|  CharacterSetEndcodingCode  |  Liste von Zeichencodierungen, welche als Werte für Attribute             |
+|                             |  'encodingCode' im UNCEFACT Datentyp xsd:base64Binary verwendet werden    |
++-----------------------------+---------------------------------------------------------------------------+
+|  MeasurementUnitCommonCode  |  Set von Einheiten, welche als Werte für das Attribut 'unitCode' im       |
+|                             |  UNCEFACT Datentyp udt:MeasureType verwendet werden.                      |
++-----------------------------+---------------------------------------------------------------------------+
+
+
+**ISO Codierung**
+
++-----------------------------+----------------------------+
+|  Codierung                  |  Beschreibung              |
++=============================+============================+
+|  ISO3AlphaCurrencyCode      |  Währungscode              |
++-----------------------------+----------------------------+
+|  ISOTwoletterCountryCode    |  Zweistelliger Ländercode  |
++-----------------------------+----------------------------+
+
+
+**IANA Codierung**
+
++-----------------------------+-----------------------------------+
+|  Codierung                  |  Beschreibung                     |
++=============================+===================================+
+|  CharacterSetCode           |  IANA Zeichencodierung            |
++-----------------------------+-----------------------------------+
+|  MiMEMediaType              |  Liste von IANA MIME Media Typen  |
++-----------------------------+-----------------------------------+
+
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("## Datenaustausch")
+robjSecEnum$displayNumSection("### Austauschparameter")
+```
+Die Ausrüstung sollte für den Operator ein Interface anbieten, über welches folgende Austauschparameter abgefragt werden können. Für eine bestimmte Diestleistung geht es dabei um folgende Parameter:
+
+* Url des Dienstleisters
+* Information zur Authentifizierung (Benutzername/Passwort)
+* Identifikation/Name/Land des Senders und des Empfängers
+* Typ des Ortes (location) {Hier ist nicht klar, was mit Ort gemeint ist}
+* Typ der Identifikation des Ortes
+* Identifikation/Name/Land des Ortes
+* Typ der primären und sekundären Tieridentifikation
+* Weitere Hersteller-spezifische Parameter
+
+Für einen bestimmten Dienstleister sollten die ausgetauschten Parameter gleich sein über alle angebotenen Dienstleisungen. 
+
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("## Zugang zur Dienstleistung")
+```
+Da die Services nicht permanent verfügbar sind, sollte keine Anfrage geschickt werden, bevor nicht die folgenden Voraussetzungen überprüft sind
+
+* Zugang zum Netzwerk
+* Zugang zum Server des Dienstleisters
+* Zugang zum Service selber
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("### Datenübertragung")
+```
+Neue Daten sollten sobald als möglich verarbeitet werden. Solange Daten beim Dienstleister noch nicht verarbeitet werden konnten, soll der Client keine neuen Daten senden. Bei asynchroner Verarbeitung muss der Client auf eine Bestätigung (ticket) von Dienstleister warten.
+
+Bestätigungen sollen nur zu vorgegebenen Zeiten an das Informationssystem geschickt werden. {Diese Aussage ist mir nicht klar. Entweder steht diese einfach isoliert da und dann ist aber nicht klar, weshalb Bestätigungen an das Informationssystem geschickt werden. Aus dem Kontext des vorangegangenen Abschnitts schickt das Informationssystem des Dienstleisters Bestätigungen an den Client und nicht umgekehrt}
+
+Meldungen oder Nachrichten (message), welche den syntaktischen Anforderungen nicht genügen, dürfen nicht gesendet werden.
+
+Sobald Daten in einer Anfrage (request) integriert sind und von einer Antwort (response) beantwortet werden, sollen die Daten als gesendet betrachtet werden.
+
+Dienstleister (Service providers) und Clients (consumers) sollten Datenupdates und Löschungen verarbeiten können. Der Dienstleister muss auch berücksichtigen, dass der Client die Updates als Neuerfassung von Daten deklariert, da der Client nicht wissen kann, welche Daten schon vorhanden sind. {Der Client kann die History der Operationen nicht wissen, deshalb macht die Operation des Updates aus Sicht des Clients keinen Sinn.}
+
+Die Vorbereitung einer Anfrage (request) gemäss den gestellten Anforderungen (business requirements) sollte unabhängig von der Zusammenstellung einer Nachricht (message) deren Syntax von der gewählten Technologie (SOAP) abhängt, gemacht werden.
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("### Verschlüsselung")
+```
+Die Datenübertragung soll verschlüsselt sein. Verschlüsselung wird hier nicht beschrieben. Datentransport soll über verschlüsselte Protokolle (HTTPS) erfolgen.
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("### Komprimierung")
+```
+Zur Minimierung der Netzwerkauslastung sollen grosse Nachrichten komprimiert werden. Zur Verhinderung der Begrenzung der Kompression bei http wird ein spezifischer Kompressionsmechanismus (Siehe Abschnitt "Nachrichtendesign") entworfen.
+
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("## Datenverarbeitung")
+```
+Dienste können in "real time" oder "verzögert" (time differed) angeboten werden. Antworten sollen innerhalb von wenigen Sekunden geschickt werden. Alle Requests und alle Antworten sollen von der Ausrüstung und vom Informationssystem gespeichert werden. Die Anforderungen für Updates auf der Datenbank kann sich zwischen Dienstleistern unterscheiden. Alle Anfrage, welche nicht konform sind zu den folgenden Bedingungen sollen nicht verarbeitet werden. Folgende Konformitätsbedingungen sollen berücksichtigt werden:
+
+* korrekte Syntax
+* korrekte Authentifizierung
+* Gültigkeit der Bestätigung (ticket)
+
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("## Verifizierung der Benutzerrechte")
+```
+Benutzerrechte für die angebotenen Dienste sollen mit üblichen Funktionalitäten, wie Authentifizierungs-Schlüssel oder Benutzernamen/Passwort sichergestellt werden.
+
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("## Spezifizierung der Anfrage")
+```
+Jede Anfrage soll aus drei Teilen bestehen
+
+1. Einzelner Message Header (siehe Einheit MessageHeader vom Typ ADEExchangedDocumentType im Abschnitt Datenbeschreibung). Der Sender einer Anfrage erstellt ein eineindeutige Nachrichten-ID (Typ ADEExchangedDocumentType.Identifier). Siehe "Best Praxis für MessageId Creation" weiter unten
+2. Eine Standard-Abfrage (siehe StandardRequest)
+3. Spezifischer Request, welcher entweder aus einem Ticket oder einer spezifischen Nachricht für einen bestimmten Dienst besteht oder eine gezippte spezifische Nachricht ist. 
+
+```{r echo=FALSE, results='asis'}
+rqudocuhelper::insertOdgFigureAsPdf(psOdgFileStem = "OrgSpezDiagramm5")
+```
+
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("## Spezifizierung der Antwort")
+```
+Jede Antwort soll aus drei Teilen bestehen:
+
+1. Nachrichten-Header
+2. Standard Antwort
+3. Spezifischen Antwort
+
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("## \"Best Praxis\" für die Erstellung einer Nachrichten-Id")
+```
+{Das sollte wahrscheinlich "Best Practice" heissen}
+
+Nachrichten-Ids von Clients und Dienstanbietern sollten global eindeutig sein, damit eine einfache Identifikation jeder Nachricht möglich ist. Dies vereinfacht die Rückverfolgbarkeit der Nachrichten und hilft bei der Fehlersuche.
+
+Nachrichten-Ids sollten auf einer Kette von folgenden Bestandteilen bestehen
+
+* eindeutige Hardware Kennung (z. Bsp. MAC-Adresse)
+* eindeutige Software Kennung
+* eindeutige Komponente, um Nachrichten, welche in hoher Frequenz erzeugt werden. Diese dynamische Komponente kann über einen Timestamp oder eine Sequence von Integerzahlen umgesetzt werden
+
+Es existieren verschiedene Tools in verschiedenen Programmiersprachen zur Erzeugung solcher IDs. (Z. Bsp. Guid.NewGuid() in C# {oder in Java existiert die Klasse UUID in java.util. Siehe http://stackoverflow.com/questions/2982748/create-a-guid-in-java oder http://kodejava.org/how-do-i-generate-uuid-guid-in-java/})
+
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("## Behandlung lokaler Anforderungen (local requirements)")
+```
+Der ICAR ADE Standardisierungs-Prozess kann nicht all lokalen Anforderungen berücksichtigen. In erster Linie soll eine gemeinsame Basis geschaffen werden.
+
+"Lokal" steht hier stellvertretend für nationale Standards. Es soll aber möglich sein, lokale Erweiterungen basierend auf speziellen Abmachungen zwischen Clients und Dienstanbietern hinzuzufügen.
+
+Erweiterungen, welche die bestehenden Spezifikationen erweitern können auf zwei Arten hinzugefügt werden
+
+1. __Lokale Kodierungslisten__: Lokale Kodierungen für alle Einheiten des Typs __udt:CodeType__ für welche ICAR noch keine akzeptierte Kodierung anbietet
+2. __Lokale zusätzliche Daten__: Liste von Schlüssel-Wert Paaren spezifische für eine Entität, welche für lokal benötigte Datenelemente verwendet werden.
+
+Lokale Variationen sollten auf ein Minimum beschränkt werden, da diese der Bestrebung von ICAR entgegenlaufen einen globalen Standard zu etablieren. Lokale Unterschiede führen zu erhöhter Komplexität und zu zusätzlichen Kosten.
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("### Lokale Kodierungen")
+```
+Lokale Kodierungen müssen für Elemente des Typs __udt:CodeType__ im lokalen Kontext geliefert werden, z.Bsp. Rassencodes. Kontrollen und Validierungen müssen in separaten Programmen umgesetzt werden. Die Sicherstellung der Gültigkeit liegt in der Verantwortung der Entwickler. 
+
+Der Service __GetLocalCodeList__ soll den Herstellern die Pflege und die Integration von lokale Kodierungen erleichtern. (Siehe den Abschnitt "Technische Services" für mehr Details)
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("### Zusätzliche lokale Daten")
+```
+Zusätzliche von der ICAR Nachrichten-Spezifikation nicht vorgesehene Daten können über die Erweiterung __LocalAdditionalData__ hinzugefügt werden. Dabei handelt es sich um Code/wert-Paare vom Typ udt:textType. Die Überprüfung der Korrektheit der Daten liegt in der Verantwortung der Entwickler oder Dienstanbieter. Die ICAR wsdl/xsd Definitionen können nur die XML Struktur überprüfen nicht aber den Inhalt.
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("## Gemeinsame Komponenten")
+```
+Dieser Abschnitt beschreibt die Komponenten, welche von allen Services verwendet werden, welche im Abschnitt "Beschreibung der Dienste" beschrieben werden.
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("### ADEEXCHANGEDDOCUMENTTYPE")
+```
+Die Komponente (entity) __ADEExchangedDocumentType__ beinhaltet Informationen zu generellen Aspekten der Nachricht. Diese wird vom Datenelement __MessageHeader__ verwendet. Das nachfolgende Diagram stellt die Komponente schematisch dar.
+
+```{r AdeExchangedDocumentTypeDiagram}
+rqudocuhelper::insertOdgFigureAsPdf(psOdgFileStem = "ADEExchangedDocumentType")
+```
+
+
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("### ADEPARTYTYPE")
+```
+
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("### STANDARDREQUESTTYPE")
+```
+
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("### STANDARDRESPONSETYPE")
+```
+
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("### ERRORTYPE")
+```
+
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("### TICKETRESPONSETYPE")
+```
+
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("### ZIPMESSAGETYPE")
+```
+
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("### LOCALADDITIONALDATATYPE")
+```
+
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("### TIMEPERIODTYPE")
+```
+
+
+
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("# Beschreibung der Dienste")
+```
+
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("# Datenverzeichnis")
+```
+
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("# Anhang")
+```
