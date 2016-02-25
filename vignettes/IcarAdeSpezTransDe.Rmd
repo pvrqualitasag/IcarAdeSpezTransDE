@@ -67,22 +67,23 @@ FB EDV, Qualitas AG                 \\
 
 # Dokumentenstatus
 
-+-------------+------------------+------------------+-------------------------------------------+
-|  Version    |  Datum           |  Wer             |  Änderung                                 |
-+=============+==================+==================+===========================================+
-|  0.0.0.900  |  01.12.2015      |  Peter von Rohr  |  Erstellung                               |
-+-------------+------------------+------------------+-------------------------------------------+
-|  0.0.0.901  |  09.12.2015      |  Peter von Rohr  |  Zusammenfassung erweitert bis Abschnitt  |
-|             |                  |                  |  "Zugang zur Dienstleistung"              |
-+-------------+------------------+------------------+-------------------------------------------+
-|  0.0.0.902  |  16.12.2015      |  Peter von Rohr  |  Zusammenfassung erweitert bis Abschnitt  |
-|             |                  |                  |  "Lokale Anforderungen"                   |
-+-------------+------------------+------------------+-------------------------------------------+
-|  0.0.0.903  |  24.02.2016      |  Pvr             |  Umstellung auf RPackage und rqudocuhelper|
-+-------------+------------------+------------------+-------------------------------------------+
-|  0.0.0.904  |  24.02.2016      |  Pvr             |  Gemeinsame Komponenten                   |
-+-------------+------------------+------------------+-------------------------------------------+
-
++-------------+------------------+------------------+--------------------------------------------------+
+|  Version    |  Datum           |  Wer             |  Änderung                                        |
++=============+==================+==================+==================================================+
+|  0.0.0.900  |  01.12.2015      |  Peter von Rohr  |  Erstellung                                      |
++-------------+------------------+------------------+--------------------------------------------------+
+|  0.0.0.901  |  09.12.2015      |  Peter von Rohr  |  Zusammenfassung erweitert bis Abschnitt         |
+|             |                  |                  |  "Zugang zur Dienstleistung"                     |
++-------------+------------------+------------------+--------------------------------------------------+
+|  0.0.0.902  |  16.12.2015      |  Peter von Rohr  |  Zusammenfassung erweitert bis Abschnitt         |
+|             |                  |                  |  "Lokale Anforderungen"                          |
++-------------+------------------+------------------+--------------------------------------------------+
+|  0.0.0.903  |  24.02.2016      |  PvR             |  Umstellung auf RPackage und rqudocuhelper       |
++-------------+------------------+------------------+--------------------------------------------------+
+|  0.0.0.904  |  24.02.2016      |  PvR             |  Gemeinsame Komponenten                          |
++-------------+------------------+------------------+--------------------------------------------------+
+|  0.0.0.905  |  25.02.2016      |  PvR             |  Abschluss Abschnitt 3 "Generelle Spezifikation" |
++-------------+------------------+------------------+--------------------------------------------------+
 
 \pagebreak
 
@@ -126,7 +127,8 @@ FB EDV, Qualitas AG                 \\
 +-------------+-------------------------------------------------------------------------+
 
 
-\vspace{1ex}
+\pagebreak
+
 # Erklärungen
 Dieses Dokument basiert auf Version 1.8 der ICAR Spezifikation ``Animal Data Exchange''. Technische Fachbegriffe wurden sinngemäss übersetzt und mit dem englischen Begriff in Klammern versehen. Diagramme wurden per Screen-shots aus dem Originaldokument kopiert und mit Zusatzinformation in Deutsch versehen. Ergänzende Bemerkungen des Übersetzers sind mit geschweiften Klammern {} gekennzeichnet.
 
@@ -720,43 +722,127 @@ Die Komponente __StandardRequestType__ repräsentiert den Standardinhalt einer A
 rqudocuhelper::insertOdgFigureAsPdf(psOdgFileStem = "StandardRequest")
 ```
 
+__StandardRequestType__ enhält folgende Bestandteile
+
+* __AuthenticationToken__: Code zur Verifizierung der Benutzer-Identität und seiner Berechtigung einen Dienst zu verwenden
+* __AuthentificationLogin__: Paar aus __Benutzername__ und __Passwort__
+
 
 ```{r echo=FALSE,results='asis'}
 robjSecEnum$displayNumSection("### STANDARDRESPONSETYPE")
 ```
+Die Komponente __StandardResponseType__ stellt den Inhalt einer Antwort dar. Dieser Type wird vom Datenelement __StandardResponse__ verwendet.
 
+```{r StandardResponseDiagram}
+rqudocuhelper::insertOdgFigureAsPdf(psOdgFileStem = "StandardResponse")
+```
+
+Bestandteile von __StandardResponseType__:
+
+* __RequestProcessingStatus__: Status der Anfragenverarbeitung, welcher vom Server zurückkommt, gemäss der Codierungsliste __RequestProcessingStatusCode__
+* __RequestID__: Kopie der Nachrichten ID in der Einheit __MessageHeader.Identifier__ der Anfrage
+* __RequestProcessingError__: Falls während der Verarbeitung der Anfrage ein Fehler aufgetreten ist, dann wird eine Fehlerbeschreibung geliefert
 
 
 ```{r echo=FALSE,results='asis'}
 robjSecEnum$displayNumSection("### ERRORTYPE")
 ```
+__ErrorType__ beinhaltet die Art des Fehlers bei einer Anfrage. Dieser Typ wird vom Datenelement __RequestProcessingError__
+
+```{r ErrorTypeDiagram}
+rqudocuhelper::insertOdgFigureAsPdf(psOdgFileStem = "ErrorType")
+```
+
+__ErrorType__ hat folgende Bestandteile:
+
+* __ErrorId__: Identität des Fehlers, z.Bsp. Fehlertext oder lokaler Fehlercode
+* __ErrorSeverity__:  Schweregrad (severity) des Fehlers gemäss der Codierungsliste __ErrorSeverityCode__
+* __ErrorDescription__: Beschreibung des Fehlers
 
 
 ```{r echo=FALSE,results='asis'}
 robjSecEnum$displayNumSection("### TICKETRESPONSETYPE")
 ```
+Der Typ __TicketResponseType__ repräsentiert ein Ticket, welches verwendet wird um eine Antwort zu bekommen. Dies wird bei der asynchronen Verarbeitung benötigt. Dieser Type wird von __SpecificRequest__ und __SpecificResponse__ vom Datenelement __TicketResponse__ verwendet
+
+
+```{r TicketResponseDiagram}
+rqudocuhelper::insertOdgFigureAsPdf(psOdgFileStem = "TicketResponse")
+```
+
+Bestandteile von __TicketResponseType__
+
+* __TicketID__: Identität der zu erhaltenden Antwort
+* __NotBefore__: Datum/Zeit zu welcher Antwort verfügbar sein sollte
 
 
 ```{r echo=FALSE,results='asis'}
 robjSecEnum$displayNumSection("### ZIPMESSAGETYPE")
 ```
+__ZipMessageType__ ist ein Wrapper fuer den Transport von komprimierten Daten
+
+```{r ZipMessageDiagram}
+rqudocuhelper::insertOdgFigureAsPdf(psOdgFileStem = "ZipMessage")
+```
+
+Bestandteile von __ZipMessageType__
+
+* __ZIPMessage__: zip komprimierte Daten
 
 
 ```{r echo=FALSE,results='asis'}
 robjSecEnum$displayNumSection("### LOCALADDITIONALDATATYPE")
 ```
+Der Typ __LocalAdditionalDataType__ ist ein Container für Paare von Codes und Werten für lokale Daten ausserhalb des Gülitgkeitsbereichs der ICAR Spezifikation. Es wird verwendet durch __LocalAdditionalData__
+
+```{r LocalAdditionalDataDiagram}
+rqudocuhelper::insertOdgFigureAsPdf(psOdgFileStem = "LocalAdditionalData")
+```
+
+Bestandteile 
+
+* __AdditionalDataCode__: Name des Code-Werte-Paares
+* __AdditionalDataValue__: Wert des Code-Werte-Paares
+* __AdditionalDataComment__: Optionale Beschreibung der lokalen Daten-Entität
 
 
 ```{r echo=FALSE,results='asis'}
 robjSecEnum$displayNumSection("### TIMEPERIODTYPE")
 ```
+__TimePeriodType__ ist ein Wrapper für den Transport von Zeitpunkten (Beginn- und Endzeitpunkt)
+
+```{r TimePeriodDiagram}
+rqudocuhelper::insertOdgFigureAsPdf(psOdgFileStem = "TimePeriod")
+```
+
+Bestandteile:
+
+* __StartTime__: Beginn einer Zeitperiode
+* __EndTime__: Ende einer Zeitperiode (optional)
 
 
-
+\pagebreak
 
 ```{r echo=FALSE,results='asis'}
-robjSecEnum$displayNumSection("# Beschreibung der Dienste")
+robjSecEnum$displayNumSection("# Beschreibung der Dienste (Service Description)")
+robjSecEnum$displayNumSection("## Melkvorgang (Milking)")
+robjSecEnum$displayNumSection("### Gemeinsame Komponenten (Common Components)")
 ```
+
+__MilkCharacteristicsType__
+
+Die Komponente {Wahrscheinlich ist hier Datenkomponente gemeint} __Characteristics__ beinhaltet eine Liste von Characteristika eines Gemelks {diese Formulierung macht so noch keinen Sinn, kann vielleicht später noch geklärt werden.} Ein Charakteristikum vom Typ __MilkCharacteristicsType__ wird als Synonym für ein Resultat einer Messung oder Klassierung von einer Milchprobe erhoben auf dem Hof oder im Labor. Dieser Typ kann auch zur Erfassung von Umweltbedingungen verwendet werden.
+
+Das Charakteristikum wird durch einen eineindeutigen Code identifiziert, welcher auf die Definition nach der Codierungsliste "ICAR_MilkCharacteristicCode" referenziert. Eine bestimmte Anzahl solcher Definitionen ist von ICAR (Tabelle "Milk Characteristics Codes") vorgegeben. Diese Definitionen können aber auch durch lokale Charakteristika ergänzt werden.
+
+```{r MilkCharacteristicsDiagram}
+rqudocuhelper::insertOdgFigureAsPdf(psOdgFileStem = "MilkCharacteristics")
+```
+
+Bestandteile:
+
+* __MilkCharacteristicCode__: Obligatorischer Code, welcher das Charakteristikum identifiziert
+* __MilkCharacteristicValue__: Messwert des Charakteristikums. Die Eigenschaft "__unitCode__" muss gemäss der Codierungstabelle "__Milk Characteristics Codes__" gesetzt sein
 
 
 ```{r echo=FALSE,results='asis'}
