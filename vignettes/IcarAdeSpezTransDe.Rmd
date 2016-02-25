@@ -684,21 +684,47 @@ Die Komponente (entity) __ADEExchangedDocumentType__ beinhaltet Informationen zu
 rqudocuhelper::insertOdgFigureAsPdf(psOdgFileStem = "ADEExchangedDocumentType")
 ```
 
+__ADEExchangedDocumentType__ enthält folgende Bestandteile:
+
+* __Identifier__: Eindeutige Identität der Nachricht, welche durch den Sender vergeben wird
+* __Issueing__: Datum und Uhrzeit, zu welcher die Nachricht abgesetzt wurde
+* __Version__: Versionsnummer der Nachricht
+* __Language__: Sprache, welche in der Nachricht verwendet wurde
+* __LocalAdditionalData__: Liste aus Schlüssel- und Wert-Paaren, welche in einem lokalen Kontext verwendet werden, wie unter "Gemeinsamen Komponenten - Lokale Anpassungen" beschrieben sind
+* __SenderParty__: Organisation oder Person verantwortlich für den Inhalt der Nachricht, kein Server-Identifier
+* __RecipientParty__: Organisation oder Persion verantwortlich für die Verarbeitung der Nachricht, kein Server-Identifier
 
 
-```{r echo=FALSE,results='asis'}
+```{r AdePartyTypeHeader}
 robjSecEnum$displayNumSection("### ADEPARTYTYPE")
 ```
+Die Komponente __ADEPartyType__ beinhaltet den Namen und die Identität der Partei, welcher entweder Sender oder Empfänger der Nachricht sein kann. Diese Komponente wird verwendet von __SenderParty__ und __RecipientParty__. Im nachfolgenden Diagramm ist die Komponente AdePartyType dargestellt
+
+```{r AdePartyTypeDiagram}
+rqudocuhelper::insertOdgFigureAsPdf(psOdgFileStem = "AdePartyType")
+```
+
+AdePartyType enthält folgende Bestandteile
+
+* __Name__: Name der spezifizierten Partei (Sender oder Empfänger). {Im Original ist hier auch Identity angegeben}
+* __ID__: Identität der spezifizierten Partei (Sender oder Empfänger)
+* __Country__: Land der spezifischen Partei gemäss __ISOTwoletterCountryCodeIdentifierContent__
 
 
-```{r echo=FALSE,results='asis'}
+```{r StandardRequestTypeHeader}
 robjSecEnum$displayNumSection("### STANDARDREQUESTTYPE")
+```
+Die Komponente __StandardRequestType__ repräsentiert den Standardinhalt einer Anfrage. Zwei verschiedene Typen von Authentifizierungen sind möglich, entweder Token-basierte oder Benutzernamen/Passwort basierte. Die Komponente wird vom Datenelement __StandardRequest__ verwendet.
+
+```{r StandardRequestDiagram}
+rqudocuhelper::insertOdgFigureAsPdf(psOdgFileStem = "StandardRequest")
 ```
 
 
 ```{r echo=FALSE,results='asis'}
 robjSecEnum$displayNumSection("### STANDARDRESPONSETYPE")
 ```
+
 
 
 ```{r echo=FALSE,results='asis'}
