@@ -3,6 +3,7 @@ output:
   pdf_document:
     includes:
       in_header: tex/header.tex
+    keep_tex: yes
   word_document: default
 ---
 
@@ -82,7 +83,9 @@ FB EDV, Qualitas AG                 \\
 +-------------+------------------+------------------+--------------------------------------------------+
 |  0.0.0.904  |  24.02.2016      |  PvR             |  Gemeinsame Komponenten                          |
 +-------------+------------------+------------------+--------------------------------------------------+
-|  0.0.0.905  |  25.02.2016      |  PvR             |  Abschluss Abschnitt 3 "Generelle Spezifikation" |
+|  0.0.0.905  |  25.02.2016      |  PvR             |  Abschluss Kapitel 3 "Generelle Spezifikation"   |
++-------------+------------------+------------------+--------------------------------------------------+
+|  0.0.0.906  |  01.03.2016      |  PvR             |  Beginn Kapitel 4 "Service Description"          |
 +-------------+------------------+------------------+--------------------------------------------------+
 
 \pagebreak
@@ -334,7 +337,7 @@ Die Melkausrüstung kann noch andere Funktionalitäten haben, welche von ATDA un
 Die Melkausrüstung wird durch einen Melker bedient und überwacht. 
 
 +-------------------------------------------------------------------------------------------------------+
-|  Für den Rest dieses Dokuments wird der Melker Melkoperator als ``Operator'' bezeichnet.              |
+|  Für den Rest dieses Dokuments wird der Melker (Melkoperator) als ``Operator'' bezeichnet.              |
 +-------------------------------------------------------------------------------------------------------+
 
 Der Operator ist angestellt und abhängig vom Besitzer der Melkausrüstung. Der Operator hat Berechtigung zum Ausführen folgender Tätigkeiten
@@ -844,6 +847,39 @@ Bestandteile:
 * __MilkCharacteristicCode__: Obligatorischer Code, welcher das Charakteristikum identifiziert
 * __MilkCharacteristicValue__: Messwert des Charakteristikums. Die Eigenschaft "__unitCode__" muss gemäss der Codierungstabelle "__Milk Characteristics Codes__" gesetzt sein
 
+__MilkCharacteristicsLocalType__
+
+Analog zu MilkCharacteristicsType ist dies ein Container für lokal verwendete Charakteristika, welche nicht im "ICAR Milk Characteristics Codes" aufgelistet sind. Komponenten sind
+
+* __LocalMilkCharacteristicCode__: Identifikations-Code eines lokalen Milch-Charakteristikums. Die Codierungsliste muss lokal zur Verfügung gestellt werden.
+* __MilkCharacteristicValue__: Messwert
+
+```{r LocalMilkCharacteristicsDiagram}
+rqudocuhelper::insertOdgFigureAsPdf(psOdgFileStem = "LocalMilkCharacteristics")
+```
+
+```{r ServiceDescriptionUpdateMilkingResult}
+robjSecEnum$displayNumSection("### Beschreibung des Dienstes UpdateMilkingResult")
+```
+
+__Zweck__
+
+Dieser Dienst (Service) soll dem Eigentümer der Melkausrüstung erlauben, dass ein externes Informationssystem sich registriert für 
+
+* Melkresultate {wahrscheinlich sind hier Milchleistungsdaten gemeint}
+* Referenzen zwischen Tier-Identifikationen und Identifikationen von Milchproben
+
+{Damit das externe Informationssystem Daten von der Melkausrüstung beziehen kann muss sich dieses zuerst beim Eigentümer der Melkausrüstung registrieren. Der hier beschriebene Service soll für diese Registration zuständig sein.}
+
+__Beschreibung der Anfrage__
+
+Die Nachricht __UpdateMilkingResultRequest__ (siehe nachfolgendes Diagramm) ist konsistent mit der Spezifikation für generelle Anfragen. Diese Nachricht wird verwendet, um neue oder geänderte Daten von Melk-Ereignissen zum Dienstleister zu übermitteln
+
+```{r UpdateMilkingResultRequestDiagram}
+rqudocuhelper::insertOdgFigureAsPdf(psOdgFileStem = "UpdateMilkingResultRequest")
+```
+
+{Dieses Diagramm wurde aus Auschnitten aus dem Original zusammengesetzt, damit es noch lesbar ist}
 
 ```{r echo=FALSE,results='asis'}
 robjSecEnum$displayNumSection("# Datenverzeichnis")
