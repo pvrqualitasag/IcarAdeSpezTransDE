@@ -68,66 +68,97 @@ FB EDV, Qualitas AG                 \\
 
 # Dokumentenstatus
 
-+-------------+------------------+------------------+--------------------------------------------------+
-|  Version    |  Datum           |  Wer             |  Änderung                                        |
-+=============+==================+==================+==================================================+
-|  0.0.0.900  |  01.12.2015      |  Peter von Rohr  |  Erstellung                                      |
-+-------------+------------------+------------------+--------------------------------------------------+
-|  0.0.0.901  |  09.12.2015      |  Peter von Rohr  |  Zusammenfassung erweitert bis Abschnitt         |
-|             |                  |                  |  "Zugang zur Dienstleistung"                     |
-+-------------+------------------+------------------+--------------------------------------------------+
-|  0.0.0.902  |  16.12.2015      |  Peter von Rohr  |  Zusammenfassung erweitert bis Abschnitt         |
-|             |                  |                  |  "Lokale Anforderungen"                          |
-+-------------+------------------+------------------+--------------------------------------------------+
-|  0.0.0.903  |  24.02.2016      |  PvR             |  Umstellung auf RPackage und rqudocuhelper       |
-+-------------+------------------+------------------+--------------------------------------------------+
-|  0.0.0.904  |  24.02.2016      |  PvR             |  Gemeinsame Komponenten                          |
-+-------------+------------------+------------------+--------------------------------------------------+
-|  0.0.0.905  |  25.02.2016      |  PvR             |  Abschluss Kapitel 3 "Generelle Spezifikation"   |
-+-------------+------------------+------------------+--------------------------------------------------+
-|  0.0.0.906  |  01.03.2016      |  PvR             |  Beginn Kapitel 4 "Service Description"          |
-+-------------+------------------+------------------+--------------------------------------------------+
+```{r DocuStatusTable}
+robjDocuStatus <- rqudocuhelper::refObjTable$new()
+pvecTableHeader <- c("Version",
+                     "Datum",
+                     "Wer",
+                     "Änderung")
+robjDocuStatus$setTableHeader(psTableHeader = pvecTableHeader)
+robjDocuStatus$addRow(plTableRow = list(Version = "0.0.0.900",
+                                        Date    = "01.12.2015",
+                                        Who     = Sys.info()[["user"]],
+                                        Change  = "Erstellung"))
+robjDocuStatus$addRow(plTableRow = list(Version = "0.0.0.901",
+                                        Date    = "09.12.2015",
+                                        Who     = Sys.info()[["user"]],
+                                        Change  = "Zusammenfassung erweitert bis Abschnitt \"Zugang zur  Dienstleistung\""))
+robjDocuStatus$addRow(plTableRow = list(Version = "0.0.0.902",
+                                        Date    = "16.12.2015",
+                                        Who     = Sys.info()[["user"]],
+                                        Change  = "Zusammenfassung erweitert bis Abschnitt \"Lokale Anforderungen\""))
+robjDocuStatus$addRow(plTableRow = list(Version = "0.0.0.903",
+                                        Date    = "24.02.2016",
+                                        Who     = Sys.info()[["user"]],
+                                        Change  = "Umstellung auf RPackage und rqudocuhelper"))
+robjDocuStatus$addRow(plTableRow = list(Version = "0.0.0.904",
+                                        Date    = "24.02.2016",
+                                        Who     = Sys.info()[["user"]],
+                                        Change  = "Gemeinsame Komponenten"))
+robjDocuStatus$addRow(plTableRow = list(Version = "0.0.0.905",
+                                        Date    = "25.02.2016",
+                                        Who     = Sys.info()[["user"]],
+                                        Change  = "Abschluss Kapitel 3"))
+robjDocuStatus$addRow(plTableRow = list(Version = "0.0.0.906",
+                                        Date    = "01.03.2016",
+                                        Who     = Sys.info()[["user"]],
+                                        Change  = "Beginn Kapitel 4"))
+#robjDocuStatus$addRow(plTableRow = list(Version = "0.0.0.907",
+#                                        Date    = "",
+#                                        Who     = Sys.info()[["user"]],
+#                                        Change  = ""))
+robjDocuStatus$to_pander_pandoc(psStyle = "grid",
+                                psJustify = rep("left", length(pvecTableHeader)),
+                                pnSplitCells = c(10,15,5,40))
+```
 
 \pagebreak
 
 # Abkürzungen
 
-+-------------+-------------------------------------------------------------------------+
-|  Abkürzung  |  Bedeutung                                                              |
-+=============+=========================================================================+
-|  ICAR       |  International Committee for Animal Recording                           |
-+-------------+-------------------------------------------------------------------------+
-|  ADE        |  Animal Data Exchange                                                   |
-+-------------+-------------------------------------------------------------------------+
-|  W3C        |  World Wide Web Consortium                                              |
-+-------------+-------------------------------------------------------------------------+
-|  UNCEFACT   |  United Nations Center for Trade Fascilitation and Electronic Business  |
-+-------------+-------------------------------------------------------------------------+
-|  ISO        |  International Organization for Standardization                         |
-+-------------+-------------------------------------------------------------------------+
-|  SOAP       |  Simple Object Access Protocol                                          |
-+-------------+-------------------------------------------------------------------------+
-|  REST       |  Representational state transfer                                        |
-+-------------+-------------------------------------------------------------------------+
-|  ATDA       |  automatisierter Tierdatenaustausch                                     |
-+-------------+-------------------------------------------------------------------------+
-|  XML        |  eXtenible Markup Language                                              |
-+-------------+-------------------------------------------------------------------------+
-|  XSD        |  XML Schema Definition                                                  |
-+-------------+-------------------------------------------------------------------------+
-|  WSDL       |  Web Services Description Language                                      |
-+-------------+-------------------------------------------------------------------------+
-|  ADIS       |  Agricultural Data Interchange Syntax                                   |
-+-------------+-------------------------------------------------------------------------+
-|  ADED       |  Agricultural Data Element Dictionary                                   |
-+-------------+-------------------------------------------------------------------------+
-|  HTTP       |  Hypertext Transfer Protocol                                            |
-+-------------+-------------------------------------------------------------------------+
-|  JSON       |  JavaScript Object Notation                                             |
-+-------------+-------------------------------------------------------------------------+
-|  URL        |  Unified Resource Locator (Adresse einer Webseite), kann auch als       |
-|             |  URI (Unified Resource Identifier) bezeichnet                           |
-+-------------+-------------------------------------------------------------------------+
+```{r AbrTable}
+robjAbrTable <- rqudocuhelper::refObjTable$new()
+pvecTableHeader <- c("Abkürzung",
+                     "Bedeutung")
+robjAbrTable$setTableHeader(psTableHeader = pvecTableHeader)
+robjAbrTable$addRow(plTableRow = list(Abr = "ICAR",
+                                      What = "International Committee for Animal Recording"))
+robjAbrTable$addRow(plTableRow = list(Abr = "ADE",
+                                      What = "Animal Data Exchange"))
+robjAbrTable$addRow(plTableRow = list(Abr = "W3C",
+                                      What = "World Wide Web Consortium"))
+robjAbrTable$addRow(plTableRow = list(Abr = "UNCEFACT",
+                                      What = "United Nations Center for Trade Fascilitation and Electronic Business"))
+robjAbrTable$addRow(plTableRow = list(Abr = "ISO",
+                                      What = "International Organization for Standardization"))
+robjAbrTable$addRow(plTableRow = list(Abr = "SOAP",
+                                      What = "Simple Object Access Protocol"))
+robjAbrTable$addRow(plTableRow = list(Abr = "REST",
+                                      What = "Representational state transfer"))
+robjAbrTable$addRow(plTableRow = list(Abr = "ATDA",
+                                      What = "automatisierter Tierdatenaustausch"))
+robjAbrTable$addRow(plTableRow = list(Abr = "XML",
+                                      What = "eXtenible Markup Language"))
+robjAbrTable$addRow(plTableRow = list(Abr = "XSD",
+                                      What = "XML Schema Definition"))
+robjAbrTable$addRow(plTableRow = list(Abr = "WSDL",
+                                      What = "Web Services Description Language"))
+robjAbrTable$addRow(plTableRow = list(Abr = "ADIS",
+                                      What = "Agricultural Data Interchange Syntax"))
+robjAbrTable$addRow(plTableRow = list(Abr = "ADED",
+                                      What = "Agricultural Data Element Dictionary"))
+robjAbrTable$addRow(plTableRow = list(Abr = "HTTP",
+                                      What = "Hypertext Transfer Protocol"))
+robjAbrTable$addRow(plTableRow = list(Abr = "JSON",
+                                      What = "JavaScript Object Notation"))
+robjAbrTable$addRow(plTableRow = list(Abr = "URL",
+                                      What = "Unified Resource Locator (Adresse einer Webseite), kann auch als URI (Unified Resource Identifier) bezeichnet"))
+#robjAbrTable$addRow(plTableRow = list(Abr = "",
+#                                      What = ""))
+robjAbrTable$to_pander_pandoc(psStyle = "grid",
+                              psJustify = rep("left", length(pvecTableHeader)),
+                              pnSplitCells = c(20,60))
+```
 
 
 \pagebreak
