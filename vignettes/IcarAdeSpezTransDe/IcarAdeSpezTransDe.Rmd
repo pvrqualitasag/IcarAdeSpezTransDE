@@ -4,6 +4,7 @@ output:
     includes:
       in_header: tex/header.tex
     keep_tex: yes
+    fig_caption: false
   word_document: default
 ---
 
@@ -66,70 +67,69 @@ FB EDV, Qualitas AG                 \\
 
 \pagebreak
 
-# Dokumentenstatus
 
-```{r R6DocuStatus, echo=FALSE, eval=FALSE}
-sStatusFile  <-  "IcarAdeSpezTransDe.docstatus"
-vecTableHeader <- c("Version",
-                    "Datum",
-                    "Wer",
-                    "Änderung")
+```{r R6DocuStatus}
+# r6objStat <- rqudocuhelper::R6ClassDocuStatus$new()
+# r6objStat$setProject("ICAR-ADE-SpUe")
+# r6objStat$setVersion("0.0.900")
+# r6objStat$setDate("01.12.2015")
+# r6objStat$setStatus("Erstellung")
+# r6objStat$writeStatusToFile()
+# r6objStat <- rqudocuhelper::R6ClassDocuStatus$new()
+# r6objStat$setProject("ICAR-ADE-SpUe")
+# r6objStat$setVersion("0.0.901")
+# r6objStat$setDate("09.12.2015")
+# r6objStat$setStatus("Zusammenfassung bis Zugang zur Dienstleistung")
+# r6objStat$writeStatusToFile()
+# r6objStat <- rqudocuhelper::R6ClassDocuStatus$new()
+# r6objStat$setProject("ICAR-ADE-SpUe")
+# r6objStat$setVersion("0.0.902")
+# r6objStat$setDate("16.12.2015")
+# r6objStat$setStatus("Zusammenfassung bis Lokale Anforderungen")
+# r6objStat$writeStatusToFile()
+# r6objStat <- rqudocuhelper::R6ClassDocuStatus$new()
+# r6objStat$setProject("ICAR-ADE-SpUe")
+# r6objStat$setVersion("0.0.903")
+# r6objStat$setDate("24.02.2016")
+# r6objStat$setStatus("Umstellung auf rqudochelper")
+# r6objStat$writeStatusToFile()
+# r6objStat <- rqudocuhelper::R6ClassDocuStatus$new()
+# r6objStat$setProject("ICAR-ADE-SpUe")
+# r6objStat$setVersion("0.0.904")
+# r6objStat$setDate("24.02.2016")
+# r6objStat$setStatus("Gemeinsame Komponenten")
+# r6objStat$writeStatusToFile()
+# r6objStat <- rqudocuhelper::R6ClassDocuStatus$new()
+# r6objStat$setProject("ICAR-ADE-SpUe")
+# r6objStat$setVersion("0.0.905")
+# r6objStat$setDate("25.02.2016")
+# r6objStat$setStatus("Abschluss Kapitel 3")
+# r6objStat$writeStatusToFile()
+# r6objStat <- rqudocuhelper::R6ClassDocuStatus$new()
+# r6objStat$setProject("ICAR-ADE-SpUe")
+# r6objStat$setVersion("0.0.906")
+# r6objStat$setDate("01.03.2016")
+# r6objStat$setStatus("Beginn Kapitel 4")
+# r6objStat$writeStatusToFile()
+# r6objStat <- rqudocuhelper::R6ClassDocuStatus$new()
+# r6objStat$setProject("ICAR-ADE-SpUe")
+# r6objStat$setVersion("0.0.907")
+# r6objStat$setDate("18.05.2016")
+# r6objStat$setStatus("Korrekturen und Ergänzungen bei Kap 1-4")
+# r6objStat$setVersion("0.0.908")
+# r6objStat$setDate("18.05.2016")
+# r6objStat$setStatus("Anhang mit Beschreibung eines Webservice")
+# r6objStat$writeStatusToFile()
+# r6objStat$knitr_kable()
+### # change to new package
+r6objDocStat <- rmddochelper::R6ClassDocuStatus$new()
+r6objDocStat$setProject("ICAR-ADE-SpUe")
+r6objDocStat$setStatus("Erweiterung Kap 4.2 Datenaustausch")
+r6objDocStat$setVersion("0.0.910")
+r6objDocStat$setDate("05.07.2016")
 
-doc_status <- rcoursetools::R6DocuStatus$new()
-
-doc_status$setTableHeader(psTableHeader = vecTableHeader)
-doc_status$addRow(plTableRow = list(Version = "0.0.0.900",
-                                        Date    = "01.12.2015",
-                                        Who     = Sys.info()[["user"]],
-                                        Change  = "Erstellung"))
-doc_status$setStatusFile(psStatusFile = sStatusFile)
-doc_status$writeStatusToFile()
-
-```
-
-
-```{r DocuStatusTable}
-robjDocuStatus <- rqudocuhelper::refObjTable$new()
-pvecTableHeader <- c("Version",
-                     "Datum",
-                     "Wer",
-                     "Änderung")
-robjDocuStatus$setTableHeader(psTableHeader = pvecTableHeader)
-robjDocuStatus$addRow(plTableRow = list(Version = "0.0.0.900",
-                                        Date    = "01.12.2015",
-                                        Who     = Sys.info()[["user"]],
-                                        Change  = "Erstellung"))
-robjDocuStatus$addRow(plTableRow = list(Version = "0.0.0.901",
-                                        Date    = "09.12.2015",
-                                        Who     = Sys.info()[["user"]],
-                                        Change  = "Zusammenfassung erweitert bis Abschnitt \"Zugang zur  Dienstleistung\""))
-robjDocuStatus$addRow(plTableRow = list(Version = "0.0.0.902",
-                                        Date    = "16.12.2015",
-                                        Who     = Sys.info()[["user"]],
-                                        Change  = "Zusammenfassung erweitert bis Abschnitt \"Lokale Anforderungen\""))
-robjDocuStatus$addRow(plTableRow = list(Version = "0.0.0.903",
-                                        Date    = "24.02.2016",
-                                        Who     = Sys.info()[["user"]],
-                                        Change  = "Umstellung auf RPackage und rqudocuhelper"))
-robjDocuStatus$addRow(plTableRow = list(Version = "0.0.0.904",
-                                        Date    = "24.02.2016",
-                                        Who     = Sys.info()[["user"]],
-                                        Change  = "Gemeinsame Komponenten"))
-robjDocuStatus$addRow(plTableRow = list(Version = "0.0.0.905",
-                                        Date    = "25.02.2016",
-                                        Who     = Sys.info()[["user"]],
-                                        Change  = "Abschluss Kapitel 3"))
-robjDocuStatus$addRow(plTableRow = list(Version = "0.0.0.906",
-                                        Date    = "01.03.2016",
-                                        Who     = Sys.info()[["user"]],
-                                        Change  = "Beginn Kapitel 4"))
-#robjDocuStatus$addRow(plTableRow = list(Version = "0.0.0.907",
-#                                        Date    = "",
-#                                        Who     = Sys.info()[["user"]],
-#                                        Change  = ""))
-robjDocuStatus$to_pander_pandoc(psStyle = "grid",
-                                psJustify = rep("left", length(pvecTableHeader)),
-                                pnSplitCells = c(10,15,5,40))
+### # include the table
+r6objDocStat$include_doc_stat(psTitle = "# Dokumentenstatus")
 ```
 
 \pagebreak
@@ -184,7 +184,7 @@ robjAbrTable$to_pander_pandoc(psStyle = "grid",
 \pagebreak
 
 # Erklärungen
-Dieses Dokument basiert auf Version 1.8 der ICAR Spezifikation ``Animal Data Exchange''. Technische Fachbegriffe wurden sinngemäss übersetzt und mit dem englischen Begriff in Klammern versehen. Diagramme wurden per Screen-shots aus dem Originaldokument kopiert und mit Zusatzinformation in Deutsch versehen. Ergänzende Bemerkungen des Übersetzers sind mit geschweiften Klammern {} gekennzeichnet.
+Dieses Dokument basiert auf Version 1.8 (Final release vom 20.11.2015) der ICAR Spezifikation ``Animal Data Exchange''. Technische Fachbegriffe wurden sinngemäss übersetzt und mit dem englischen Begriff in Klammern versehen. Diagramme wurden per Screen-shots aus dem Originaldokument kopiert und mit Zusatzinformation in Deutsch versehen. Ergänzende Bemerkungen des Übersetzers sind mit geschweiften Klammern {} gekennzeichnet.
 
 
 \vspace{1ex}
@@ -194,8 +194,8 @@ robjSecEnum$displayNumSection("# Ausgangslage")
 ICAR ADE steht für die Spezifikation des automatisierten Austauschs von Tierdaten von ICAR. Der Datenaustausch wird anhand von folgenden Bestandteilen definiert.
 
 1. Anforderungen (Business requirements) und technischen Spezifikationen
-2. Datenbeschreibung, welche konsistent sind mit den Empfehlungen von W3C für XML Schemas, UNCEFACT und ISO
-3. Spezifikationen von Interfaces konsistent mit den Empfehlungen von W3C für XML Schemas, UNCEFACT und ISO
+2. Datenbeschreibung zur Verfügung gestellt als Dateien, welche konsistent sind mit den Empfehlungen von W3C für XML Schemas, UNCEFACT und ISO
+3. Spezifikationen von Interfaces zur Verfügung gestellt als Dateien, konsistent mit den Empfehlungen von W3C für XML Schemas, UNCEFACT und ISO
 
 Die Anforderungen können unterteilt werden in 
 
@@ -214,7 +214,7 @@ Datenbeschriftungen beinhalten
 - Beschreibung des Services
 - Aufbau des Übermittlungsprotokolls
 - Beschreibung der Datenentität (entity)
-- Beschreibung einer Dateneinheit (item)
+- Beschreibung einer Datenuntereinheit (item)
 - Beschreibung des Code-sets, d.h. der Zeichencodierung
 
 Die technische Implementation behandelt die Umsetzung der Anforderungen auf verschiedene Arten
@@ -222,29 +222,29 @@ Die technische Implementation behandelt die Umsetzung der Anforderungen auf vers
 - Vordergründig sollen die Empfehlungen von W3C und UNCEFACT für Datendefinitionen und Interfacedefinitionen (SOAP) verwendet werden.
 - Alternativ können auch ISO Standards (17532 2007) für den Datenaustausch ab Hof mit stationärer Ausrüstung und REST Technologie verwendet werden.
 
-Eine Übersicht der verschiedenen Komponenten ist im folgenden Diagramm gegeben.
+{Eine Übersicht der verschiedenen Komponenten ist im folgenden Diagramm gegeben.
 
 ```{r echo=FALSE, results='asis'}
 rqudocuhelper::insertOdgAsPdf(psOdgFileStem = "DiagrammSpezScope")
 ```
-
+}
 
 \pagebreak
 
 ```{r echo=FALSE,results='asis'}
 robjSecEnum$displayNumSection("# Beschreibung des automatisierten Tierdatenaustauschs")
 ```
-Dieser Abschnitt enthält folgende Punkte
+{Dieser Abschnitt enthält folgende Punkte
 
 - Geschichte und aktueller Status betreffend des ATDA
 - Ziele des ATDA
 - Strategie zur Erreichung der Ziele des ATDA
 - Kontext des ATDA
 
-In den folgenden Unterabschnitten werden die einzelnen Punkte noch genauer beschrieben.
+In den folgenden Unterabschnitten werden die einzelnen Punkte noch genauer beschrieben.}
 
 ```{r echo=FALSE,results='asis'}
-robjSecEnum$displayNumSection("## Geschichte und aktueller Status")
+robjSecEnum$displayNumSection("## Hintergrund (Background)")
 ```
 Aktuell ist der ATDA zwischen Geräten und externen Informationssystem nicht möglich oder nur über spezialisierte Softwareprogramme (sogenannte Middleware) möglich. Diese Middleware basiert auf lokalen meist proprietären und veralteten Standards. Das folgende Diagramm zeigt die aktuelle Situation bezüglich ATDA
 
@@ -254,7 +254,7 @@ rqudocuhelper::insertOdgAsPdf(psOdgFileStem = "OrgSpezDiagramm1")
 
 Die Middleware ist teuer in der Implementation und im Unterhalt. Meistens müssen diese Systeme mit manuellen Interventionen bedient werden. Diese Middleware basierten Systeme sind häufig langsam und sind sehr aufwändig zu optimieren. Daraus folgt auch, dass die Übermittlung von grossen Datenmengen nicht möglich ist.
 
-Moderne Datenzentren machen es möglich grosse Datenmengen zuverarbeiten. Eine steigende Anzahl an Gerätschaften und Sensoren produziert eine exponentiell wachsende Menge and Daten. Diese enormen Datenmengen können nur noch durch automatisierte und standardisierte Prozesse verarbeitet werden. 
+Moderne Datenzentren machen es möglich grosse Datenmengen zu verarbeiten. Eine steigende Anzahl an Gerätschaften und Sensoren produziert eine exponentiell wachsende Menge and Daten. Diese enormen Datenmengen können nur noch durch automatisierte und standardisierte Prozesse verarbeitet werden. 
 
 Eines automatisierter Austausch von grossen Datenmengen in Echtzeit hätte die folgenden Vorteile:
 
@@ -280,20 +280,20 @@ robjSecEnum$displayNumSection("## Strategien zur Erreichung der Ziele")
 robjSecEnum$displayNumSection("### Inhalt des ATDA")
 ```
 
-Die Ziele des ATDA können durch folgendes Framework erreicht werden  
+Die Ziele des ATDA können durch ein Framework mit folgenden Bestandteilen oder Eigenschaften erreicht werden  
 
 1. Architektur zur Unterstützung des Datenaustauschs
 2. Standards für Nachrichten und Daten
 3. Tools zur Erleichterung der Umsetzung (Implementation)
 4. Reaktiver Unterhaltsprozess
 
-Die vorgeschlagene Architektur basiert auf einem Service-orientierter Ansatz, in welchem das externe Informationssystem als Provider dem Gerät als Client verschiedene Services zur Verfügung stellt. Das folgende Diagramm zeigt die vorgeschlagene Modellarchitektur
+Die vorgeschlagene Architektur basiert auf einem Service-orientierten Ansatz, in welchem das externe Informationssystem als Provider dem Gerät als Client verschiedene Services zur Verfügung stellt. Das folgende Diagramm zeigt die vorgeschlagene Modellarchitektur
 
 ```{r echo=FALSE, results='asis'}
 rqudocuhelper::insertOdgAsPdf(psOdgFileStem = "OrgSpezDiagramm2")
 ```
 
-Die Standards beinhalten
+Die im obigen Diagramm gezeigte Architektur kann durch verschiedene Informationstechnologien implementiert werden. Diese Technologie-Standards sind in diesem Dokument beschrieben. Diese Standards beinhalten
 
 - Anforderungen und Voraussetzungen zur Verwendung des Services
 - Voraussetzungen zur Bereitstellung des Services
@@ -309,6 +309,9 @@ Die Tools, welche die Umsetzung vereinfachen sollen, beinhalten
     + Dateien zur Spezifikation des web service (WSDL Dateien)
 - eine Testplatform
 
+{Aufgrund der Email von Bert van 't Land vom 13.05.2016 ist diese Webseite unter: \url{https://icar-web.atlassian.net/wiki/display/ADE/ICAR+ADE+public+information} erreichbar. Von dort können ohne Login die Spezifikation und die WSDL-Dateien heruntergeladen werden.}
+
+
 ```{r echo=FALSE,results='asis'}
 robjSecEnum$displayNumSection("### ADE Implementation")
 ```
@@ -316,7 +319,7 @@ robjSecEnum$displayNumSection("### ADE Implementation")
 Das nachfolgende Diagramm beschreibt den Prozess des Datenaustauschs
 
 ```{r echo=FALSE, results='asis'}
-rqudocuhelper::insertOdgAsPdf(psOdgFileStem = "OrgSpezDiagramm3")
+rqudocuhelper::insertOdgAsPdf(psOdgFileStem = "OrgSpezDiagramm3", pnPaperWidthScale = 0.5)
 ```
 
 Der oben beschriebene Prozess wird durch eine Nachfrage (business need) ausgelöst. Die Anforderungen (business requirements) sollen das Resultat einer Zusammenarbeit zwischen ICAR und Gerätehersteller sein. Diese sind unabhängig von der Technik oder Technologie, welche zur Umsetzung verwendet wird. {wahrscheinlich sind hier die Anforderungen gemeint}
@@ -431,6 +434,26 @@ Die WSDL/XSD Dateien beschreiben folgende Aspekte des Transport-Protokolls
 - Grundlegende Definitionen von Datentypen (XSD Typen, UNCEFACT Typen, ...)
 - Definitionen von erweiterten und zusammengesetzten Datentypen
 - Restriktionen (Constraints), d.h. Gültigkeitsbereiche von Datentypen
+
+{Hier wird eine kurze Übersicht zu __WSDL__ (\url{https://de.wikipedia.org/wiki/Web_Services_Description_Language}) und __XSD__ eingeschoben. Eine ausführlichere Beschreibung zum Thema `Webservices` ist im Anhang zu finden. 
+
+WSDL ist eine Sprache zur Beschreibung von Netzwerkdiensten (Webservices). Die Sprache ist unabhängig von Plattform, Programmiersprache und Protokoll. Die beschriebenen Dienste tauschen Nachrichten auf der Basis von XML aus. WSDL beschreibt die angebotenen Funktionen, Daten, Datentypen und Austauschprotokolle eines Webservices. Es werden die Operationen definiert, welche von aussen zugänglich sind, sowie die Parameter und Rückgabewerte dieser Operationen. WSDL enthält funktionale Angaben zu
+
+- der Schnittstelle
+- dem Zugangsprotokoll und Details zum Deployment
+- zu allen notwendigen Informationen für den Zugriff auf den Service. 
+
+Beschreibungselemente sind:
+
+- __types__
+- __message__
+- __portType__
+- __binding__
+- __port__
+- __service__
+
+XSD steht für XML Schema Definition und ist eine von W3C empfohlene Definition von Strukturen für XML-Dokumente. 
+}
 
 \pagebreak
 
@@ -885,7 +908,16 @@ robjSecEnum$displayNumSection("### Gemeinsame Komponenten (Common Components)")
 
 __MilkCharacteristicsType__
 
-Die Komponente {Wahrscheinlich ist hier Datenkomponente gemeint} __Characteristics__ beinhaltet eine Liste von Characteristika eines Gemelks {diese Formulierung macht so noch keinen Sinn, kann vielleicht später noch geklärt werden.} Ein Charakteristikum vom Typ __MilkCharacteristicsType__ wird als Synonym für ein Resultat einer Messung oder Klassierung von einer Milchprobe erhoben auf dem Hof oder im Labor. Dieser Typ kann auch zur Erfassung von Umweltbedingungen verwendet werden.
+Die Komponente {Wahrscheinlich ist hier Datenkomponente gemeint} __Characteristics__ beinhaltet eine Liste von Characteristika eines Gemelks 
+
+{Diese Formulierung macht so noch keinen Sinn. Vermutlich wird hier folgende Bedeutung impliziert: Characteristics steht für eine Sequenz oder eine Liste von MilkCharacteristicsTypen. Die MilkCharacteristicsTypen sind eine Art von generischen Datentypen oder Datenrecords, welche für jedwelche Art von Messungen verwendet werden können. Diese MilkCharacteristicsTypen bestehen aus zwei Komponenten. 
+
+1. ein Messwert
+2. ein Code, welcher den MilkCharacteristicsTypen referenziert.
+
+__NB__: Was hier fehlt und was, z.Bsp. in den Data Dictionnaries der Melksystemanbieter vorkommt, ist die Angabe des Messzeitpunktes.} 
+
+Ein Charakteristikum vom Typ __MilkCharacteristicsType__ wird als Synonym für ein Resultat einer Messung oder Klassierung von einer Milchprobe erhoben auf dem Hof oder im Labor. Dieser Typ kann auch zur Erfassung von Umweltbedingungen verwendet werden.
 
 Das Charakteristikum wird durch einen eineindeutigen Code identifiziert, welcher auf die Definition nach der Codierungsliste "ICAR_MilkCharacteristicCode" referenziert. Eine bestimmte Anzahl solcher Definitionen ist von ICAR (Tabelle "Milk Characteristics Codes") vorgegeben. Diese Definitionen können aber auch durch lokale Charakteristika ergänzt werden.
 
@@ -932,11 +964,245 @@ rqudocuhelper::insertOdgAsPdf(psOdgFileStem = "UpdateMilkingResultRequest")
 
 {Dieses Diagramm wurde aus Auschnitten aus dem Original zusammengesetzt, damit es noch lesbar ist}
 
+
+__AnimalMilkingResults__
+
+beinhaltet die wesentlichen Eigenschaften für ein bestimmtes Gemelk (milking)
+
+* __AnimalIdentity__ (Tier-Identität): Eindeutige Identität eines Tieres, welche für den Datentransfer verwendet wird. Diese Identität beinhaltet die Identität und den Label des gemolkenen Tieres. Die Identität kann zu einer Instanz vom Typ AnimalDetail verweisen. Diese enthält weitere Informationen zum Tier. Eine Instanz vom Typ AnimalDetail kann vom Service "__UpdateAnimal__" geliefert werden, falls diese erforderlich ist.
+
+{Hier ist nicht klar, was mit Label gemeint ist. Bei der Datenübertragung ist es entscheidend, wer die Identität vergibt. Werden die Identitäten von jedem Betrieb vergeben, dann sind diese nur innerhalb des Betriebes eindeutig. Auf einem zentralen Informationssystem müssen die Betriebs-spezifischen Identitäten noch mit einer Betriebskennung ergänzt werden.}
+
+* __Location__ (Melk-Ort): Orts-Id, wo Tier gemolken wurde. Diese Id kann auf eine Instanz von LiveStockLocation referenzieren, welche bei Bedarf vom Service __UpdateLiveStockLocation__ geliefert wird.
+
+* __MilkingParlourUnit__, __MilkingBoxNumber__: optionale genauere Identifikation des Ortes, wo Tier gemolken wurde
+
+* __MilkingStartingTime__, __MilkingDuration__, __MilkingVisitDuration__, __MilkingType__, __MilkingMilkWeight__, __MilkingSucces__: zusätzliche Beschreibung des Gemelks
+
+* __Characteristics__: Sequenz/Liste von Milcheigenschaften (Milk characteristics), dies kann eine Messung oder eine Klassierung sein. Die einzelnen Elemente in der Sequenz/Liste sind Instanzen des Typs __MilkCharacteristics__. Prinzipiell ist es eine List von Schlüssel-Werte-Paaren, welche die Codes der MilkCharacteristic Typen mit den jeweiligen Messwerten verbindet. Die Definition der Codes ist in der Tabelle "Milk Characteristic Codes" gezeigt.
+
+* __LocalCharacteristics__: Lokal definierte Variante von __Characteristics__. Ist nicht Teil der offiziellen "ICAR Milk Characteristics Codes"
+
+* __QuarterMilking__: Optionale Viertel-Gemelks Resultate. Wird nicht von jedem Hersteller unterstützt. 
+
+* __AnimalMilkingSample__: Optionale Instanz, welche Details von Milchproben für Laboranalysen beschreibt
+
+* __MilkingDeviceID__: Optionaler Bestandteil, welcher die ID der Melkausrüstung enthält. Die ID ist eine Referenz auf die Entität Ausrüstung (Device), welche vom Service "__UpdateDevice__" geliefert wird, falls benötigt.
+
+* __MeasureDeviceID__: Optionaler Bestandteil, welcher die ID des Messgerätes enthält. Die ID ist eine Referenz auf eine Entität Ausrüstung (Device), welche vom Service "__UpdateDevice__" geliefert wird, falls benötigt.
+
+* __LocalAdditionalData__: Optionale Liste von Schlüssel-Wert Paaren, welche in einem lokalen Kontext verwendet werden.
+
+{In der folgenden Darstellung sind die als nicht-optional deklarierten Komponenten einer AnimalMilkingResult Entität dargestellt. Mit Ausnahme der Entität Characteristics sind alles atomare Entitäten, d.h., diese haben keine weiteren Unterkomponenten.}
+
+```{r AnimalMilkResultMandatory}
+rmddochelper::insertOdgAsPdf(psOdgFileStem = "AnimalMilkResultMandatory")
+```
+
+__Characteristics__
+Diese Entität beinhaltet die Gemelk-Eigenschaften, welche während eines Melkvorgangs aufgezeichnet werden. Diese sind im Abschnitt "Gemeinsame Komponenten" beschrieben.
+
+__Beschreibung der Antwort__
+
+Die Nachricht __UpdateMilkingResultResponse__ ist konsistent mit der allgemeinen Spezifikation für Anfragen (siehe Generelle Spezifikationen und Antowrt-Spezifikationen). Diese Antwort dient zur Übermittlung und zum Empfang von Melk-Resultaten, wie sie vom Dienstleistungsanbieter verarbeitet werden.
+
+```{r UpdateMilkingResultsResponse}
+rmddochelper::insertOdgAsPdf(psOdgFileStem = "UpdateMilkingResultsResponse")
+```
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("### Dienstbeschreibung GetMilkingLabResults")
+```
+
+__Zweck__
+
+Damit Betriebe Analyseresultate von externen Informationssystemen für Herdenmanagement oder Gerätekallibrierung bekommen können. Der Link zwischen Proben und den Analyseresultaten muss durch das Informationssystem der Aufzeichnungsorganisation (Serviceanbieter) zur Verfügung gestellt werden.
+
+__Beschreibung der Anfrage__
+
+Die Anfrage ist konsitent mit den allgemeinen Anforderungen für Anfragen
+
+```{r GetMilkingLabResultRequest}
+rmddochelper::insertOdgAsPdf(psOdgFileStem = "GetMilkingLabResultRequest")
+```
+
+{Die im obigen Diagramm gezeigten Komponenten wurden schon einmal erkärt oder sind selbst-erklärend. Da dieser Service nicht in erster Priorität umgesetzt wird, verzichten wir auf eine weitere Beschreibung.}
+
+__Beschreibung der Antwort__
+
+{Die Antwort ist sehr ähnlich zu __AnimalMilkingSample__.}
+
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("## Austausch von Tierdaten")
+```
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("### Anforderungen, Dienste und Nachrichten")
+```
+Eine korrekt geführte Liste aller Tiere in der Herde (im folgenden als Tierliste bezeichnet) ist eine Voraussetzung für eine zuverlässige Aufzeichnung von Tierdaten. Tierlisten auf der Melkausrüstung und auf dem Betriebs-Management-System (BMS) (farm management system) {dieser Begriff taucht hier zum ersten Mal auf und wurde nicht genauer definiert} weisen sehr wahrscheinlich Unterschiede auf. Gründe für solche Unterschiede sind
+
+* Unterschiedliche Eingabe-Quellen (manuelle Eingabe durch Betriebsleiter, vs. automatisierte Registrierung)
+* Unterschiedliche Verfügbarkeit der Daten
+
+Der Business-Prozess `Austausch von Tierdaten` (Exchange of Animal Data) soll folgende Aufgaben erledigen:
+
+* einfache Initialisierung der Datenbank auf der Melkausrüstung oder des Betriebs-Management-Systems
+* Weiterleitung von neuen oder geänderten Daten auf das oder vom Betriebs-Management-System
+* helfen Datenkonflikte früher festzustellen
+
+Der Tierdatenaustausch stellt verschiedene Methoden zur Verfügung, welche helfen sollen die Daten auf der Melkausrüstung und im Betriebs-Managment-System synchron zu halten.
+
+* __GetHerdList__: Initialisierung der Tierlisten auf dem IS der Melkausrüstrung oder auf dem BMS
+* __GetAnimal__: Beschreibung des Tieres vom Dienstleister
+* __UpdateAnimal__: Übermittlung der Tierbeschreibung and den Dienstleister
+* __GetArrival__: Anfordern der Ankunftsänderungen (arrival changes) vom Dienstleister
+* __UpdateArrival__: Übermitteln der Ankunftsänderungen an den Dienstleister
+* __GetDeparture__: Anfordern der Abgangsänderungen (departure changes) vom Dienstleister
+* __UpdateDeparture__: Übermitteln der Abgangsänderungen an den Dienstleister
+
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("### Gemeinsame Komponenten")
+```
+
+__AnimalIdentityType__
+
+Diese Entität kann offizielle oder alternative Tier-Identifikationen beinhalten. Als primäre Identitäten {analog zu primary keys auf der Datenbank} sollen nur offzielle Identitäten verwendet werden. Alternative Identitäten werden nur verwendet um Veränderungen von Namen oder Betriebs-internen Nummern zu erkennen. Auf dem IS der Melkausrüstung werden oft Betriebs-interne Nummern oder Namen verwendet, welche nicht eindeutig sein müssen und wieder verwendet werden. Die Verwendung solcher Betriebs-internen Identitäten können zu Fehlern bei der identifikation von Proben führen.
+
+```{r AnimalIdentityType}
+rmddochelper::insertOdgAsPdf(psOdgFileStem = "AnimalIdentityType")
+```
+
+{Die Bestandteile von AnimalIdentityType sind}
+
+* __Identifier__: Alternative Tier-Identität {bei dieser Forulierung wird nicht klar, ob offizielle Tier-Identitäten auch mit diesem Typ repräsentiert werden}
+* __Label__: Typ der alternativen Tier-Identität, gemäss der Codierungsliste __LabelCode__
+
+\pagebreak
+
+__AnimalCoreDataSetType__
+
+Diese Entität beinhaltet die Kern-Charakteristika eines Tieres.
+
+{Die folgenden Darstellungen sind aus der Originalgraphik zusammengesetzt}
+
+```{r AnimalCoreDataSetType}
+rmddochelper::insertOdgAsPdf(psOdgFileStem = "AnimalCoreDataSetType")
+```
+
+* __Identifier__: primäre eindeutige Identität des Tieres
+* __AlternativeIdentity__: sekundäre Tieridentität
+* __Specie__: Tier-Spezies
+* __Gender__: Geschlecht
+* __Birth__: Geburtsdatum des Tieres
+* __Breed__: Lokaker Code der Rasse des Tieres
+* __Sire__: Beschreibung des Vaters
+* __RecipientDam__: Beschreibung der Trägermutter im Fall von ET
+* __GeneticDam__: Beschreibung der genetischen Mutter
+
+{Sire, RecipientDam und GeneticDam sind Instanzen von AnimalIdentityType}
+
+\pagebreak
+
+__ArrivalCoreDataSetType__
+
+Diese Entität beschreibt den Zugang eines Tieres zu einem Standort (location) {damit ist wahrscheinlich ein Betrieb oder eine Herde gemeint}.
+
+```{r ArrivalCoreDataSetType}
+rmddochelper::insertOdgAsPdf(psOdgFileStem = "ArrivalCoreDataSetType")
+```
+
+{Die einzelnen Komponenten sind wie folgt definiert}
+
+* __ArrivalDate__: Datum des Zugangs
+* __ArrivalReason__: lokaler Code, welcher den Grund für Zugang
+* __OriginLocation__: vorangegangener Standort, von welchem aus das Tier zugegangen ist
+* __LocalAdditionalData__: lokal definierte Liste von Schlüssel-Wert-Paaren
+
+\pagebreak
+
+__DepartureCoreDataSetType__
+
+Diese Entität beschreibt den Abgang eines Tieres von einem Standort.
+
+```{r DepartureCoreDataSetType}
+rmddochelper::insertOdgAsPdf(psOdgFileStem = "DepartureCoreDataSetType")
+```
+
+{Die einzelnen Komponenten sind wie folgt definiert}
+
+* __DepartureDate__: Abgangsdatum eines Tieres von einem Standort
+* __DepartureReasonCode__: Code, welcher den Abgangsgrund spezifiziert
+* __DestinationLocation__: zukünftiger Standort zu welchem Tier verschoben wird
+* __LocalAdditionalData__: lokal definierte Liste von Schlüssel-Wert-Paaren
+
+\pagebreak
+
+__AnimalDescriptionType__
+
+Diese Komponente enthält die Beschreibung eines Tieres, aktuell sind darin Kern-Daten (core data), erweiterte Daten (extended Data) und Bewegungsdaten (movement data) enthalten. 
+
+```{r AnimalDescriptionType}
+rmddochelper::insertOdgAsPdf(psOdgFileStem = "AnimalDescriptionType")
+```
+
+{Dieser Datentyp ist aus vorher definierten Komponenten zusammengesetzt. Die einzelnen Komponenten sind wie folgt definiert.}
+
+* __AnimalCoreDataSet__: Beschreibung eines Tieres
+* __AnimalExtendedDataSet__: ist zusammengesetzt aus folgenden optionalen Elementen
+    + __LastLocalization__: Datum des letzten Zugangs des Tieres zum Standort
+    + __LastParturition__: letzte aufgezeichnete Trächtigkeit des Tieres
+    + __LastInsemination__:  letzte aufgezeichnete Besamung des Tieres
+* __AnimalMovementDataSet__: Liste von Bewegungen {zwischen Standorten} des Tieres
+    + __Location__: Standort, wo Tier registriert wurde
+    + __Arrival__: Zugang auf einen bestimmten Standort
+    + __Departure__: Abgang von einem Standort
+
+\pagebreak
+
+__MovementRequest__
+
+Die Entität MovementRequest dient dazu optionale Parameter, welche die Grösse des Resultats einer Bewegungsantwort (movement response) bestimmen. Als Beispiel wird diese Entität in den Nachrichten __GetArrival__ und __GetDeparture__ verwendet. {Aus dieser Formulierung wird die Bedeutung der Entität nicht klar. Offenbar ist das einfach die Datenstruktur, welche bei den genannten Services __GetArrival__ und __GetDeparture__ zurückgeliefert wird.}
+
+```{r MovementRequest}
+rmddochelper::insertOdgAsPdf(psOdgFileStem = "MovementRequest")
+```
+
+{Die im Diagramm gezeigten Komponenten sind wie folgt definiert.}
+
+* __EventTimePeriod__: Ablaufdatum der Antwort auf eine gegebene Periode eines Zugangsereignisses (siehe TimePeriodType)
+* __RegistrationTimePeriod__: Ablaufdatum der Antwort einer gegebenen Periode einer Zugangsregistrierung
+* __Location__: Standort, falls dieser gegeben, dann werden Antworten auf diese Standort beschränkt
+* __AnimalIdentifier__: Tier-Identität, falls diese gegeben, dann wird Antwort auf dieses Tier beschränkt
+
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("### Servicebeschreigung: GetHerdList")
+```
+
+__Zweck__
+
+
+__Anforderungsbeschreibung__
+
+
+__Antwortbeschreibung__
+
+
+\pagebreak
+
 ```{r echo=FALSE,results='asis'}
 robjSecEnum$displayNumSection("# Datenverzeichnis")
 ```
 
 
+\pagebreak
+\appendix
+
 ```{r echo=FALSE,results='asis'}
 robjSecEnum$displayNumSection("# Anhang")
+robjSecEnum$displayNumSection("## Web Service")
 ```
+
+
+

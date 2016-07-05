@@ -1,0 +1,11 @@
+Version	Date	Author	Status	Project
+0.0.901	09.12.2015	pvr	Zusammenfassung bis Zugang zur Dienstleistung	ICAR-ADE-SpUe
+0.0.902	16.12.2015	pvr	Zusammenfassung bis Lokale Anforderungen	ICAR-ADE-SpUe
+0.0.903	24.02.2016	pvr	Umstellung auf rqudochelper	ICAR-ADE-SpUe
+0.0.904	24.02.2016	pvr	Gemeinsame Komponenten	ICAR-ADE-SpUe
+0.0.905	25.02.2016	pvr	Abschluss Kapitel 3	ICAR-ADE-SpUe
+0.0.906	01.03.2016	pvr	Beginn Kapitel 4	ICAR-ADE-SpUe
+0.0.907	18.05.2016	pvr	Korrekturen und Ergänzungen bei Kap 1-4	ICAR-ADE-SpUe
+0.0.908	18.05.2016	pvr	Anhang mit Beschreibung eines Webservice	ICAR-ADE-SpUe
+0.0.909	04.07.2016	pvr	Umstellung auf neues Docuhelper package	ICAR-ADE-SpUe
+0.0.910	05.07.2016	pvr	Erweiterung Kap 4.2 Datenaustausch	ICAR-ADE-SpUe
