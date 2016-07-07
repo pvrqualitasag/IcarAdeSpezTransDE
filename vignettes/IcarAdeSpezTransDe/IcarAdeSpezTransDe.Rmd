@@ -69,65 +69,20 @@ FB EDV, Qualitas AG                 \\
 
 
 ```{r R6DocuStatus}
-# r6objStat <- rqudocuhelper::R6ClassDocuStatus$new()
-# r6objStat$setProject("ICAR-ADE-SpUe")
-# r6objStat$setVersion("0.0.900")
-# r6objStat$setDate("01.12.2015")
-# r6objStat$setStatus("Erstellung")
-# r6objStat$writeStatusToFile()
-# r6objStat <- rqudocuhelper::R6ClassDocuStatus$new()
-# r6objStat$setProject("ICAR-ADE-SpUe")
-# r6objStat$setVersion("0.0.901")
-# r6objStat$setDate("09.12.2015")
-# r6objStat$setStatus("Zusammenfassung bis Zugang zur Dienstleistung")
-# r6objStat$writeStatusToFile()
-# r6objStat <- rqudocuhelper::R6ClassDocuStatus$new()
-# r6objStat$setProject("ICAR-ADE-SpUe")
-# r6objStat$setVersion("0.0.902")
-# r6objStat$setDate("16.12.2015")
-# r6objStat$setStatus("Zusammenfassung bis Lokale Anforderungen")
-# r6objStat$writeStatusToFile()
-# r6objStat <- rqudocuhelper::R6ClassDocuStatus$new()
-# r6objStat$setProject("ICAR-ADE-SpUe")
-# r6objStat$setVersion("0.0.903")
-# r6objStat$setDate("24.02.2016")
-# r6objStat$setStatus("Umstellung auf rqudochelper")
-# r6objStat$writeStatusToFile()
-# r6objStat <- rqudocuhelper::R6ClassDocuStatus$new()
-# r6objStat$setProject("ICAR-ADE-SpUe")
-# r6objStat$setVersion("0.0.904")
-# r6objStat$setDate("24.02.2016")
-# r6objStat$setStatus("Gemeinsame Komponenten")
-# r6objStat$writeStatusToFile()
-# r6objStat <- rqudocuhelper::R6ClassDocuStatus$new()
-# r6objStat$setProject("ICAR-ADE-SpUe")
-# r6objStat$setVersion("0.0.905")
-# r6objStat$setDate("25.02.2016")
-# r6objStat$setStatus("Abschluss Kapitel 3")
-# r6objStat$writeStatusToFile()
-# r6objStat <- rqudocuhelper::R6ClassDocuStatus$new()
-# r6objStat$setProject("ICAR-ADE-SpUe")
-# r6objStat$setVersion("0.0.906")
-# r6objStat$setDate("01.03.2016")
-# r6objStat$setStatus("Beginn Kapitel 4")
-# r6objStat$writeStatusToFile()
-# r6objStat <- rqudocuhelper::R6ClassDocuStatus$new()
-# r6objStat$setProject("ICAR-ADE-SpUe")
-# r6objStat$setVersion("0.0.907")
-# r6objStat$setDate("18.05.2016")
-# r6objStat$setStatus("Korrekturen und Ergänzungen bei Kap 1-4")
-# r6objStat$setVersion("0.0.908")
-# r6objStat$setDate("18.05.2016")
-# r6objStat$setStatus("Anhang mit Beschreibung eines Webservice")
-# r6objStat$writeStatusToFile()
-# r6objStat$knitr_kable()
 ### # change to new package
 r6objDocStat <- rmddochelper::R6ClassDocuStatus$new()
 r6objDocStat$setProject("ICAR-ADE-SpUe")
-r6objDocStat$setStatus("Erweiterung Kap 4.2 Datenaustausch")
-r6objDocStat$setVersion("0.0.910")
-r6objDocStat$setDate("05.07.2016")
+# r6objDocStat$setStatus("Erweiterung Kap 4.2 Datenaustausch")
+# r6objDocStat$setVersion("0.0.910")
+# r6objDocStat$setDate("05.07.2016")
 
+# r6objDocStat$setStatus("Servicebeschreigung: GetHerdList")
+# r6objDocStat$setVersion("0.0.911")
+# r6objDocStat$setDate("06.07.2016")
+
+r6objDocStat$setStatus("Servicebeschreigung: UpdateAnimal")
+r6objDocStat$setVersion("0.0.912")
+r6objDocStat$setDate("07.07.2016")
 ### # include the table
 r6objDocStat$include_doc_stat(psTitle = "# Dokumentenstatus")
 ```
@@ -945,6 +900,8 @@ rqudocuhelper::insertOdgAsPdf(psOdgFileStem = "LocalMilkCharacteristics")
 robjSecEnum$displayNumSection("### Beschreibung des Dienstes UpdateMilkingResult")
 ```
 
+{Die nun folgenden Beschreibungen von Anfragen und Antworten beginnen häufig mit dem Satz, dass eine entsprechende Nachricht, eine Anfrage oder eine Antwort konsistent sei mit der entsprechenden generellen Spezifikation. Da diese Aussage sehr oft wiederholt wird, wird diese im folgenden nicht immer wieder angefügt. Falls explizite Abweichungen von generellen Spezifikationen erwähnt sind, sind diese auch aufgeführt.}
+
 __Zweck__
 
 Dieser Dienst (Service) soll dem Eigentümer der Melkausrüstung erlauben, dass ein externes Informationssystem sich registriert für 
@@ -956,7 +913,7 @@ Dieser Dienst (Service) soll dem Eigentümer der Melkausrüstung erlauben, dass 
 
 __Beschreibung der Anfrage__
 
-Die Nachricht __UpdateMilkingResultRequest__ (siehe nachfolgendes Diagramm) ist konsistent mit der Spezifikation für generelle Anfragen. Diese Nachricht wird verwendet, um neue oder geänderte Daten von Melk-Ereignissen zum Dienstleister zu übermitteln
+Diese Nachricht wird verwendet, um neue oder geänderte Daten von Melk-Ereignissen zum Dienstleister zu übermitteln
 
 ```{r UpdateMilkingResultRequestDiagram}
 rqudocuhelper::insertOdgAsPdf(psOdgFileStem = "UpdateMilkingResultRequest")
@@ -1004,7 +961,7 @@ Diese Entität beinhaltet die Gemelk-Eigenschaften, welche während eines Melkvo
 
 __Beschreibung der Antwort__
 
-Die Nachricht __UpdateMilkingResultResponse__ ist konsistent mit der allgemeinen Spezifikation für Anfragen (siehe Generelle Spezifikationen und Antowrt-Spezifikationen). Diese Antwort dient zur Übermittlung und zum Empfang von Melk-Resultaten, wie sie vom Dienstleistungsanbieter verarbeitet werden.
+Die Antwort __UpdateMilkingResultResponse__ dient zur Übermittlung und zum Empfang von Melk-Resultaten, wie sie vom Dienstleistungsanbieter verarbeitet werden.
 
 ```{r UpdateMilkingResultsResponse}
 rmddochelper::insertOdgAsPdf(psOdgFileStem = "UpdateMilkingResultsResponse")
@@ -1020,7 +977,6 @@ Damit Betriebe Analyseresultate von externen Informationssystemen für Herdenman
 
 __Beschreibung der Anfrage__
 
-Die Anfrage ist konsitent mit den allgemeinen Anforderungen für Anfragen
 
 ```{r GetMilkingLabResultRequest}
 rmddochelper::insertOdgAsPdf(psOdgFileStem = "GetMilkingLabResultRequest")
@@ -1182,9 +1138,138 @@ robjSecEnum$displayNumSection("### Servicebeschreigung: GetHerdList")
 
 __Zweck__
 
+Erlaubt es dem Besitzer der Melkanlage eine Tierliste zu bekommen, inklusive Bewegungsdaten, Reproduktionsdaten wie z. Bsp. die letzte Abkalbung oder die letzte Besamung. Die Resultate können durch die Angabe von Suchparametern, wie Standort, Geschlecht oder Zeitperiode eingegrenzt werden.
 
-__Anforderungsbeschreibung__
 
+__Anfragebeschreibung__
+
+Die Nachricht __GetHerdListRequest__ wird verwendet für Anfragen nach einer Herdenliste {Liste aller Tiere in einer Herde} für einen bestimmten Standort im BMS. 
+
+```{r GetHerdListRequest}
+rmddochelper::insertOdgAsPdf(psOdgFileStem = "GetHerdListRequest")
+```
+
+Die Eingrenzung des Resultats wird über optionale Parameter gemacht.
+
+```{r HerdListRequest}
+rmddochelper::insertOdgAsPdf(psOdgFileStem = "HerdListRequest")
+```
+
+{Die Komponenten sind wie folgt definiert}
+
+* __Gender__: Resultate werden auf ein bestimmtes Geschlecht beschränkt
+* __Periode__: Beschränkung der Resultate auf eine bestimmte Zeitperiode
+* __Location__: Beschränkung der Resultate auf einen Standort
+
+\pagebreak
+
+__Antwortbeschreibung__
+
+
+```{r GetHerdListResponse}
+rmddochelper::insertOdgAsPdf(psOdgFileStem = "GetHerdListResponse")
+```
+
+Der Container __HerdListMessage__ beinhaltet die Beschreibung des Standorts (Location) und eine Liste von Tierbeschreibungen {im Container} __HerdListAnimalDescription__ vom Typ AnimalDescription. 
+
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("### Servicebeschreigung: UpdateHerdList")
+```
+
+__Zweck__
+
+Erlaubt dem Eigentümer der Melkanlage Änderungen in der Herdenliste, inklusive Bewegungsdaten und Reproduktionsdaten an den Dienstleister zu übermitteln.
+
+
+__Anfragebeschreibung__
+
+Die Nachricht __UpdateHerdListRequest__ ist konsisten mit den allgemeinen Spezifikationen für Anfragen. 
+
+Der Container __HerdListMessage__ beinhaltet eine Standortangabe (Location), eine Liste von Tierbeschreibungen, welche an den Dienstleister übermittelt werden sollen.
+
+```{r UpdateHerdList}
+rmddochelper::insertOdgAsPdf(psOdgFileStem = "UpdateHerdList")
+```
+
+__Antwortbeschreibung__
+
+Die Nachricht __UpdateHerdListResponse__ wird verwendet um den Status der Verarbeitung der Herdenlistendaten durch den Dienstleister zu empfangen.
+
+```{r UpdateHerdListResponse}
+rmddochelper::insertOdgAsPdf(psOdgFileStem = "UpdateHerdListResponse")
+```
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("### Servicebeschreigung: GetAnimal")
+```
+
+__Zweck__
+
+Der Dienst __GetAnimal__ ermöglicht es der Melkausrüstung Tierinformationen vom BMS zu erhalten
+
+__Anfragebeschreibung__
+
+Die Nachricht __GetAnimalRequest__ macht eine Anfrage für Tierinformationen, welche auf dem BMS gespeichert sind.
+
+```{r GetAnimalRequest}
+rmddochelper::insertOdgAsPdf(psOdgFileStem = "GetAnimalRequest")
+```
+
+__Antwortbeschreibung__
+
+Die Nachricht __GetAnimalResponse__ enthält die Informationen des Tiers, welches durch den Parameter __AnimalIdentifier__ spezifiziert wird.
+
+```{r GetAnimalResponse}
+rmddochelper::insertOdgAsPdf(psOdgFileStem = "GetAnimalResponse")
+```
+
+__AnimalMessage__ enthält die Beschreibung des angeforderten Tieres.
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("### Servicebeschreigung: UpdateAnimal")
+```
+
+__Zweck__
+
+Der Dienst __UpdateAnimal__ erlaubt es der Melkausrüstung Informationen an das BMS zu schicken.
+
+__Anfragebeschreibung__
+
+```{r UpdateAnimal}
+rmddochelper::insertOdgAsPdf(psOdgFileStem = "UpdateAnimal")
+```
+
+__AnimalListMessage__ entspricht einer Liste von __AnimalData__ {hier sollte es wahrscheinlich AnimalDetail heissen} Komponenten vom Typ __AnimalListMessageType__, welche die Details der Tiere, welche aktuell durch die Melkausrüstung verwaltet werden.
+
+
+```{r AnimalDetail}
+rmddochelper::insertOdgAsPdf(psOdgFileStem = "AnimalDetail")
+```
+
+* __AnimalCoreDataSet__: Beschreibung der zentralen Daten eines Tieres
+* __AnimalMovementDataSet__: Liste von Standortänderungen, welche für die Melkausrüstung bekannt sind
+* __Location__: Standort eines Tieres
+* __ArrivalCoreDataSet__: zentrale Daten eines Zugangs zu einem Standort
+* __DepartureCoreDataSet__: Details eines Abgangs eines Tieres von einem Standort
+
+\pagebreak
+
+__Antwortbeschreibung__
+
+Nachricht __UpdateAnimalResponse__ wird verwendet den Verarbeitungsstatus  für Daten eines Tieres vom Dienstleister zu erhalten.
+
+```{r UpdateAnimalResponse}
+rmddochelper::insertOdgAsPdf(psOdgFileStem = "UpdateAnimalResponse")
+```
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("### Servicebeschreigung: GetArrivals")
+```
+
+__Zweck__
+
+__Anfragebeschreibung__
 
 __Antwortbeschreibung__
 
