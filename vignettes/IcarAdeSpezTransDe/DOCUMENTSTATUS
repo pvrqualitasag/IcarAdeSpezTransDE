@@ -8,4 +8,6 @@ Version	Date	Author	Status	Project
 0.0.907	18.05.2016	pvr	Korrekturen und Ergänzungen bei Kap 1-4	ICAR-ADE-SpUe
 0.0.908	18.05.2016	pvr	Anhang mit Beschreibung eines Webservice	ICAR-ADE-SpUe
 0.0.909	04.07.2016	pvr	Umstellung auf neues Docuhelper package	ICAR-ADE-SpUe
-0.0.910	05.07.2016	pvr	Erweiterung Kap 4.2 Datenaustausch	ICAR-ADE-SpUe
+0.0.910	05.07.2016	pvr	Kap 4.2 Datenaustausch	ICAR-ADE-SpUe
+0.0.911	06.07.2016	pvr	Servicebeschreigung: GetHerdList	ICAR-ADE-SpUe
+0.0.912	07.07.2016	pvr	Servicebeschreigung: UpdateAnimal	ICAR-ADE-SpUe

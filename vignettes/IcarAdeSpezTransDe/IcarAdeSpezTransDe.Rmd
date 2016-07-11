@@ -857,7 +857,23 @@ Bestandteile:
 
 ```{r echo=FALSE,results='asis'}
 robjSecEnum$displayNumSection("# Beschreibung der Dienste (Service Description)")
+```
+{Die in diesem Abschnitt beschriebenen Dienste können in vier Gruppen eingeteilt werden. 
+
+1. Melkvorgang 
+2. Tierbewegungen
+3. Reproduktion
+4. Technische Dienste
+
+Für den Austausch von Milchleistungsdaten sind vor allem die Dienste der ersten Gruppe relevant. Die Dienste rund um die Bewegungen der Tiere zwischen Standorten werden umgesetzt, um unterschiedliche Datenbestände zwischen ISMs und zentralen Datenbanken abzugleichen.
+
+
+}
+```{r echo=FALSE,results='asis'}
 robjSecEnum$displayNumSection("## Melkvorgang (Milking)")
+```
+
+```{r echo=FALSE,results='asis'}
 robjSecEnum$displayNumSection("### Gemeinsame Komponenten (Common Components)")
 ```
 
@@ -1269,9 +1285,47 @@ robjSecEnum$displayNumSection("### Servicebeschreigung: GetArrivals")
 
 __Zweck__
 
+Der Service __GetArrivals__ erlaubt es dem Eigentümer der Ausrüstung Informationen über Zugänge eines Tieres zu einem bestimmten Standort zu erhalten.
+
 __Anfragebeschreibung__
 
+Die Nachricht __GetArrivalsRequest__ wird verwendet die Liste von Zugängen von Tieren, welche auf dem BMS gespeichert sind, zu erhalten.
+
+```{r GetArrivalsRequest}
+rmddochelper::insertOdgAsPdf(psOdgFileStem = "GetArrivalsRequest")
+```
+
+Das Resultat der Anfrage kann durch die Angabe weiterer Parameter in der Entität __MovementsRequest__ eingegrenzt werden. 
+
 __Antwortbeschreibung__
+Die Nachricht __GetArrivalsResponse__ gibt eine Liste von Zugangsdaten, welche auf dem BMS registriert sind und welche durch verschiedene Parameter eingeschränkt werden können.
+
+```{r GetArrivalsResponse}
+rmddochelper::insertOdgAsPdf(psOdgFileStem = "GetArrivalsResponse")
+```
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("### Servicebeschreigung: UpdateArrivals")
+```
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("### Servicebeschreigung: GetDepartures")
+```
+
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("### Servicebeschreigung: UpdateDepartures")
+```
+
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("## Austausch von Reproduktions-Ereignissen")
+```
+
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("## Technische Dienste")
+```
 
 
 \pagebreak
@@ -1279,7 +1333,13 @@ __Antwortbeschreibung__
 ```{r echo=FALSE,results='asis'}
 robjSecEnum$displayNumSection("# Datenverzeichnis")
 ```
+Die `xsd`-Dateien gelten als primäres Datenverzeichnis. Beschreibungen von Datenelementen müssen in den `xsd`-Dateien mittels `xsd:document`-Elementen zur Verfügung gestellt werden. Der folgende Ausschnitt gibt eine Beispiel für eine solche Beschreibung
 
+```{r XsdExample}
+rmddochelper::insertOdgAsPdf(psOdgFileStem = "XsdExample")
+```
+
+Aus den `xsd`-Dateien können html-Seiten erzeugt werden.
 
 \pagebreak
 \appendix
