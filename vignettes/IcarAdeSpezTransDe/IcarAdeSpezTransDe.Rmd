@@ -5,7 +5,7 @@ output:
       in_header: tex/header.tex
     keep_tex: yes
     fig_caption: false
-  word_document: default
+bibliography: IcarAdeSpezTransDe.bibtex
 ---
 
 ```{r DocumentSetup, echo=FALSE, results='hide', include=FALSE}
@@ -67,6 +67,10 @@ FB EDV, Qualitas AG                 \\
 
 \pagebreak
 
+```{r Setup}
+knitcitations::cleanbib()
+```
+
 
 ```{r R6DocuStatus}
 ### # change to new package
@@ -80,9 +84,18 @@ r6objDocStat$setProject("ICAR-ADE-SpUe")
 # r6objDocStat$setVersion("0.0.911")
 # r6objDocStat$setDate("06.07.2016")
 
-r6objDocStat$setStatus("Servicebeschreigung: UpdateAnimal")
-r6objDocStat$setVersion("0.0.912")
-r6objDocStat$setDate("07.07.2016")
+# r6objDocStat$setStatus("Servicebeschreigung: UpdateAnimal")
+# r6objDocStat$setVersion("0.0.912")
+# r6objDocStat$setDate("07.07.2016")
+
+# r6objDocStat$setStatus("Abschluss Kap 4.2 Datenaustausch")
+# r6objDocStat$setVersion("0.0.913")
+# r6objDocStat$setDate("12.07.2016")
+
+r6objDocStat$setStatus("Anhang zu Webservice und Referenzen")
+r6objDocStat$setVersion("0.0.914")
+r6objDocStat$setDate("13.07.2016")
+
 ### # include the table
 r6objDocStat$include_doc_stat(psTitle = "# Dokumentenstatus")
 ```
@@ -1308,14 +1321,67 @@ rmddochelper::insertOdgAsPdf(psOdgFileStem = "GetArrivalsResponse")
 robjSecEnum$displayNumSection("### Servicebeschreigung: UpdateArrivals")
 ```
 
+__Zweck__
+
+Der Dienst __UpdateArrivals__ dient der Registrierung von neuen oder geänderten Ereignissen von Zugängen von Tieren zu Standorten im BMS.
+
+__Anfragebeschreibung__
+
+Eine Liste von Zugangsereignissen wird dem Dienstanbieter übermittelt.
+
+```{r UpdateArrivalsRequest}
+rmddochelper::insertOdgAsPdf(psOdgFileStem = "UpdateArrivalsRequest")
+```
+
+* Komponente __ArrivalListMessage__ entspricht einer Liste von Ereignissen von Zugängen von Tieren zu Standorten. Einzelne Komponenten dieser Liste sind vom Typ __ArrivalDataSetType__. 
+
+```{r AnimalArrivalType}
+rmddochelper::insertOdgAsPdf(psOdgFileStem = "AnimalArrivalType")
+```
+
+{Folgende Komponenten sind in einem ArrivalDataSet enthalten}
+
+* __AnimalCoreDataSet__: Basisbeschreibung eines Tieres
+* __Location__: Standort des Zugangs
+* __ArrivalCoreDataSet__: Details eines Zugangs eines Tieres zu einem Standort
+
+__Antwortbeschreibung__
+
+Die Nachricht __UpdateArrivalsResponse__ wird verwendet den Status eines Zugangs zu einem Standort, welcher vom Dienstanbieter verarbeitet wird, zu empfangen.
+
+```{r UpdateArrivalsResponse}
+rmddochelper::insertOdgAsPdf(psOdgFileStem = "UpdateArrivalsResponse")
+```
+
+
 ```{r echo=FALSE,results='asis'}
 robjSecEnum$displayNumSection("### Servicebeschreigung: GetDepartures")
+```
+
+{Analog zu GetArrivals}
+
+__Zweck__
+
+Der Dienst __GetDepartures__ erlaubt es dem Besitzer der Melkanlage eine Liste von Abgängen von Tieren von einem Standort zu erhalten.
+
+__Anfragebeschreibung__
+
+```{r GetDeparturesRequest}
+rmddochelper::insertOdgAsPdf(psOdgFileStem = "GetDeparturesRequest")
+```
+
+__Antwortbeschreibung
+
+```{r GetDeparturesResponse}
+rmddochelper::insertOdgAsPdf(psOdgFileStem = "GetDeparturesResponse")
 ```
 
 
 ```{r echo=FALSE,results='asis'}
 robjSecEnum$displayNumSection("### Servicebeschreigung: UpdateDepartures")
 ```
+
+{Analog zu UpdateArrivals}
 
 
 ```{r echo=FALSE,results='asis'}
@@ -1341,13 +1407,44 @@ rmddochelper::insertOdgAsPdf(psOdgFileStem = "XsdExample")
 
 Aus den `xsd`-Dateien können html-Seiten erzeugt werden.
 
+
 \pagebreak
-\appendix
+
 
 ```{r echo=FALSE,results='asis'}
 robjSecEnum$displayNumSection("# Anhang")
-robjSecEnum$displayNumSection("## Web Service")
 ```
 
 
+{Die folgende Übersicht zum Thema Web Service ist nicht Teil der ursprünglichen Spezifikation
 
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("# Web Service")
+```
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("## Motivation")
+```
+
+Durch den laufend steigenden Grad der Vernetzung kam schon früh der Wunsch auf Programme von einem Client aus auf einem Remote-Server ausführen zu können. Der Wunsch wurde einerseits durch die gesteigerte Effizienz, wenn Programme nur einmal geschrieben werden müssen und dann von vielen Clients ausgeführt werden können und andererseits können so auch zentralisierte Resourcen and verteilte Clients verfügbar gemacht werden.
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("## Hintergrund")
+```
+Vorläufer von Webservices, die da hiessen RPC (remote procedure call) oder RMI (remote method invocation) hatten den oben formulierten Wunsch schon realisiert. Diese Ansätze waren aber wenig flexibel. Schliesslich wurden sie durch Web services abgelöst. 
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("## Architektur")
+```
+Webservices orientieren sich an der sogenannten serviceorientierten Architektur (SOA). Der Begriff SOA ist nicht einheitlich definiert. Eine mögliche Definition, welche aus @Melzer_2010 entnommen wurde, lautet: "Unter einer SOA versteht man eine Systemarchitektur, die vielfältige und eventuell inkompatible Methoden oder Applikationen als wiederverwendbare und offen zugreifbare Dienste repräsentiert und dadurch eine plattform- und sprachunabhängige Nutzung und Wiederverwendung ermöglicht." 
+
+}
+
+```{r WriteCitations, eval=FALSE, echo=FALSE, results='hide', warning=FALSE}
+sBibFile <- "IcarAdeSpezTransDe.bibtex"
+if (!file.exists(sBibFile))
+  knitcitations::write.bibtex(file = sBibFile)
+```
+
+\pagebreak
+
+# References
