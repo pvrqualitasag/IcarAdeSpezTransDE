@@ -11,14 +11,28 @@ bibliography: IcarAdeSpezTransDe.bib
 ```{r DocumentSetup, echo=FALSE, results='hide', include=FALSE}
 ### # specify knitr options
 knitr::opts_chunk$set(echo = FALSE, results = 'asis')
+```
 
+```{r DocumentOptions}
 ### # clean cache with references
 knitcitations::cleanbib()
 options("citation_format" = "pandoc")
 
 ### # initialize section counter
 robjSecEnum <- rqudocuhelper::SectionEnumerator$new()
+
+### # init abbreviation Table
+r6obj_abr <- rmddochelper::R6ClassTableAbbrev$new()
+r6obj_abr$setColHeader(pvColHeader = c("Abkürzung", "Bedeutung"))
+
+### # init translation table
+r6obj_transl <- rmddochelper::R6ClassTableAbbrev$new()
+r6obj_transl$setColHeader(pvColHeader = c("Original", "Übersetzung"))
+r6obj_transl$setAbbrFile(psAbbrFile="TRANSLATION")
+r6obj_transl$setQuote(pbQuote=FALSE)
 ```
+
+
 
 
 ![Qualitas Logo](png/QualitasLogo.png)
@@ -28,7 +42,7 @@ robjSecEnum <- rqudocuhelper::SectionEnumerator$new()
 		\centering \fontsize{12pt}{20pt}\selectfont % 
 		\vspace*{0.5cm} % 
 
-		\hfill Übersetzung Spezifikation
+		\hfill Übersetzung
 
 		\vspace*{0.5cm} 
 	}
@@ -102,73 +116,38 @@ r6objDocStat$set_current_status(psVersion = "0.0.915",
                                 psProject = "ICAR-ADE-SpUe",
                                 psDate = "03.08.2016")
 
+r6objDocStat$set_current_status(psVersion = "0.0.916",
+                                psStatus = "Abkürzungen mit rmddochelper",
+                                psProject = "ICAR-ADE-SpUe",
+                                psDate = "29.08.2016")
+r6objDocStat$set_current_status(psVersion = "0.0.917",
+                                psStatus = "Übersetzungstabelle mit rmddochelper",
+                                psProject = "ICAR-ADE-SpUe",
+                                psDate = "29.08.2016")
+r6objDocStat$set_current_status(psVersion = "0.0.918",
+                                psStatus = "zusätzliche Erklärungen",
+                                psProject = "ICAR-ADE-SpUe",
+                                psDate = "07.09.2016")
+
 ### # include the table
 r6objDocStat$include_doc_stat(psTitle = "# Dokumentenstatus")
-```
-
-\pagebreak
-
-# Abkürzungen
-
-```{r AbrTable}
-robjAbrTable <- rqudocuhelper::refObjTable$new()
-pvecTableHeader <- c("Abkürzung",
-                     "Bedeutung")
-robjAbrTable$setTableHeader(psTableHeader = pvecTableHeader)
-robjAbrTable$addRow(plTableRow = list(Abr = "ICAR",
-                                      What = "International Committee for Animal Recording"))
-robjAbrTable$addRow(plTableRow = list(Abr = "ADE",
-                                      What = "Animal Data Exchange"))
-robjAbrTable$addRow(plTableRow = list(Abr = "W3C",
-                                      What = "World Wide Web Consortium"))
-robjAbrTable$addRow(plTableRow = list(Abr = "UNCEFACT",
-                                      What = "United Nations Center for Trade Fascilitation and Electronic Business"))
-robjAbrTable$addRow(plTableRow = list(Abr = "ISO",
-                                      What = "International Organization for Standardization"))
-robjAbrTable$addRow(plTableRow = list(Abr = "SOAP",
-                                      What = "Simple Object Access Protocol"))
-robjAbrTable$addRow(plTableRow = list(Abr = "REST",
-                                      What = "Representational state transfer"))
-robjAbrTable$addRow(plTableRow = list(Abr = "ATDA",
-                                      What = "automatisierter Tierdatenaustausch"))
-robjAbrTable$addRow(plTableRow = list(Abr = "XML",
-                                      What = "eXtenible Markup Language"))
-robjAbrTable$addRow(plTableRow = list(Abr = "XSD",
-                                      What = "XML Schema Definition"))
-robjAbrTable$addRow(plTableRow = list(Abr = "WSDL",
-                                      What = "Web Services Description Language"))
-robjAbrTable$addRow(plTableRow = list(Abr = "ADIS",
-                                      What = "Agricultural Data Interchange Syntax"))
-robjAbrTable$addRow(plTableRow = list(Abr = "ADED",
-                                      What = "Agricultural Data Element Dictionary"))
-robjAbrTable$addRow(plTableRow = list(Abr = "HTTP",
-                                      What = "Hypertext Transfer Protocol"))
-robjAbrTable$addRow(plTableRow = list(Abr = "JSON",
-                                      What = "JavaScript Object Notation"))
-robjAbrTable$addRow(plTableRow = list(Abr = "URL",
-                                      What = "Unified Resource Locator (Adresse einer Webseite), kann auch als URI (Unified Resource Identifier) bezeichnet"))
-#robjAbrTable$addRow(plTableRow = list(Abr = "",
-#                                      What = ""))
-robjAbrTable$to_pander_pandoc(psStyle = "grid",
-                              psJustify = rep("left", length(pvecTableHeader)),
-                              pnSplitCells = c(20,60))
 ```
 
 
 \pagebreak
 
 # Erklärungen
-Dieses Dokument basiert auf Version 1.8 (Final release vom 20.11.2015) der ICAR Spezifikation ``Animal Data Exchange''. Technische Fachbegriffe wurden sinngemäss übersetzt und mit dem englischen Begriff in Klammern versehen. Diagramme wurden per Screen-shots aus dem Originaldokument kopiert und mit Zusatzinformation in Deutsch versehen. Ergänzende Bemerkungen des Übersetzers sind mit geschweiften Klammern {} gekennzeichnet.
+Dieses Dokument basiert auf Version 1.8 (Final release vom 20.11.2015) der ICAR Spezifikation ``Animal Data Exchange''. Technische Fachbegriffe wurden sinngemäss übersetzt und mit dem englischen Begriff in Klammern versehen und am Schluss dieses Dokuments in einer Übersetzungstabelle aufgelistet. Diagramme wurden per Screen-shots aus dem Originaldokument kopiert und mit Zusatzinformation in Deutsch versehen. Ergänzende Bemerkungen des Übersetzers sind mit geschweiften Klammern {} gekennzeichnet.
 
 
 \vspace{1ex}
 ```{r echo=FALSE,results='asis'}
 robjSecEnum$displayNumSection("# Ausgangslage")
 ```
-ICAR ADE steht für die Spezifikation des automatisierten Austauschs von Tierdaten von ICAR. Der Datenaustausch wird anhand von folgenden Bestandteilen definiert.
+ICAR `r r6obj_abr$add_abbrev(psAbbrev="ADE", psMeaning="Animal Data Exchange")` steht für die Spezifikation des automatisierten Austauschs von Tierdaten vom `r r6obj_abr$add_abbrev(psAbbrev="ICAR", psMeaning="International Committee for Animal Recording")`. Der Datenaustausch wird anhand von folgenden Bestandteilen definiert.
 
-1. Anforderungen (Business requirements) und technischen Spezifikationen
-2. Datenbeschreibung zur Verfügung gestellt als Dateien, welche konsistent sind mit den Empfehlungen von W3C für XML Schemas, UNCEFACT und ISO
+1. `r r6obj_transl$add_abbrev(psAbbrev="business requirements", psMeaning="Anforderungen")` und technischen Spezifikationen
+2. Datenbeschreibung zur Verfügung gestellt als Dateien, welche konsistent sind mit den Empfehlungen vom `r r6obj_abr$add_abbrev(psAbbrev="W3C", psMeaning="World Wide Web Consortium")` für `r r6obj_abr$add_abbrev(psAbbrev="XML", psMeaning="eXtenible Markup Language")` Schemas, `r r6obj_abr$add_abbrev(psAbbrev="UNCEFACT", psMeaning="United Nations Center for Trade Fascilitation and Electronic Business")` und `r r6obj_abr$add_abbrev(psAbbrev="ISO", psMeaning="International Organization for Standardization")`
 3. Spezifikationen von Interfaces zur Verfügung gestellt als Dateien, konsistent mit den Empfehlungen von W3C für XML Schemas, UNCEFACT und ISO
 
 Die Anforderungen können unterteilt werden in 
@@ -180,27 +159,29 @@ Die Anforderungen können unterteilt werden in
 Für einen bestimmten Datenaustausch enthalten die spezifischen Anforderungen 
 
 - den Zweck des Datenaustauschs
-- den Kontext (business context) des Datenaustauschs
+- den `r r6obj_transl$add_abbrev(psAbbrev="business context", psMeaning="Kontext")` des Datenaustauschs
 - die Anforderungen an den Datenaustausch inklusive der Beschreibung des Übermittlungsprotokolls
 
 Datenbeschriftungen beinhalten
 
 - Beschreibung des Services
 - Aufbau des Übermittlungsprotokolls
-- Beschreibung der Datenentität (entity)
-- Beschreibung einer Datenuntereinheit (item)
+- Beschreibung der `r r6obj_transl$add_abbrev(psAbbrev="entity", psMeaning="Datenentität")`
+- Beschreibung einer `r r6obj_transl$add_abbrev(psAbbrev="item", psMeaning="Datenuntereinheit")`
 - Beschreibung des Code-sets, d.h. der Zeichencodierung
 
 Die technische Implementation behandelt die Umsetzung der Anforderungen auf verschiedene Arten
 
-- Vordergründig sollen die Empfehlungen von W3C und UNCEFACT für Datendefinitionen und Interfacedefinitionen (SOAP) verwendet werden.
-- Alternativ können auch ISO Standards (17532 2007) für den Datenaustausch ab Hof mit stationärer Ausrüstung und REST Technologie verwendet werden.
+- Vordergründig sollen die Empfehlungen von W3C und UNCEFACT für Datendefinitionen und Interfacedefinitionen (`r r6obj_abr$add_abbrev(psAbbrev="SOAP", psMeaning="Simple Object Access Protocol")`) verwendet werden.
+- Alternativ können auch ISO Standards (17532 2007) für den Datenaustausch ab Hof mit stationärer Ausrüstung und `r r6obj_abr$add_abbrev(psAbbrev="REST", psMeaning="Representational state transfer")` Technologie verwendet werden.
 
 {Eine Übersicht der verschiedenen Komponenten ist im folgenden Diagramm gegeben.
 
 ```{r echo=FALSE, results='asis'}
 rqudocuhelper::insertOdgAsPdf(psOdgFileStem = "DiagrammSpezScope")
 ```
+
+Ein Problem dieser Spezifikation ist, dass Prozesse des Projektablaufs und auch organisatiorische Fragen nicht sauber von den technischen Aspekten des Datenaustauschs getrennt sind. Diese Vermischung erschwert das Verständnis erheblich.
 }
 
 \pagebreak
@@ -210,7 +191,7 @@ robjSecEnum$displayNumSection("# Beschreibung des automatisierten Tierdatenausta
 ```
 {Dieser Abschnitt enthält folgende Punkte
 
-- Geschichte und aktueller Status betreffend des ATDA
+- Geschichte und aktueller Status betreffend des `r r6obj_abr$add_abbrev(psAbbrev="ATDA", psMeaning="automatisierter Tierdatenaustausch")`
 - Ziele des ATDA
 - Strategie zur Erreichung der Ziele des ATDA
 - Kontext des ATDA
@@ -218,7 +199,7 @@ robjSecEnum$displayNumSection("# Beschreibung des automatisierten Tierdatenausta
 In den folgenden Unterabschnitten werden die einzelnen Punkte noch genauer beschrieben.}
 
 ```{r echo=FALSE,results='asis'}
-robjSecEnum$displayNumSection("## Hintergrund (Background)")
+robjSecEnum$displayNumSection(paste("##", r6obj_transl$add_abbrev(psAbbrev="Background", psMeaning = "Hintergrund")))
 ```
 Aktuell ist der ATDA zwischen Geräten und externen Informationssystem nicht möglich oder nur über spezialisierte Softwareprogramme (sogenannte Middleware) möglich. Diese Middleware basiert auf lokalen meist proprietären und veralteten Standards. Das folgende Diagramm zeigt die aktuelle Situation bezüglich ATDA
 
@@ -258,7 +239,7 @@ Die Ziele des ATDA können durch ein Framework mit folgenden Bestandteilen oder 
 
 1. Architektur zur Unterstützung des Datenaustauschs
 2. Standards für Nachrichten und Daten
-3. Tools zur Erleichterung der Umsetzung (Implementation)
+3. Tools zur Erleichterung der `r r6obj_transl$add_abbrev(psAbbrev="implementation", psMeaning="Umsetzung")`
 4. Reaktiver Unterhaltsprozess
 
 Die vorgeschlagene Architektur basiert auf einem Service-orientierten Ansatz, in welchem das externe Informationssystem als Provider dem Gerät als Client verschiedene Services zur Verfügung stellt. Das folgende Diagramm zeigt die vorgeschlagene Modellarchitektur
@@ -272,15 +253,15 @@ Die im obigen Diagramm gezeigte Architektur kann durch verschiedene Informations
 - Anforderungen und Voraussetzungen zur Verwendung des Services
 - Voraussetzungen zur Bereitstellung des Services
 - Voraussetzungen für den Datenaustausch
-- Semantische Definition der ausgetauschten Daten, d.h. die Bedeutung der Daten, inklusive der Zeichenkodierung (code set). {Die Semantik der Daten bezeichnet die Zuweisung von Bedeutungen zu den Daten}
+- Semantische Definition der ausgetauschten Daten, d.h. die Bedeutung der Daten, inklusive der `r r6obj_transl$add_abbrev(psAbbrev="code set", psMeaning="Zeichenkodierung")`. {Die Semantik der Daten bezeichnet die Zuweisung von Bedeutungen zu den Daten}
 - Spezifikation der Syntax für die ausgetauschten Daten nach Standards von W3C, UNCEFACT und ISO. {Dies betrifft das zugelassene Format der Daten}
-- Spezifikation eines Interfaces nach den Standards von W3C, UNCEFACT und ISO. {Das Interface bezeichnet die Menge an Funktionalitäten, welche als Kunden (Clients) des Services aufgerufen werden können}
+- Spezifikation eines Interfaces nach den Standards von W3C, UNCEFACT und ISO. {Das Interface bezeichnet die Menge an Funktionalitäten, welche als `r r6obj_transl$add_abbrev(psAbbrev="clients", psMeaning="Kunden")` des Services aufgerufen werden können}
 
 Die Tools, welche die Umsetzung vereinfachen sollen, beinhalten
 
 - eine Webseite zum Download von
-    + Dateien mit XML Datentypen (XSD Dateien)
-    + Dateien zur Spezifikation des web service (WSDL Dateien)
+    + Dateien mit XML Datentypen (`r r6obj_abr$add_abbrev(psAbbrev="XSD", psMeaning="XML Schema Definition")` Dateien)
+    + Dateien zur Spezifikation des web service (`r r6obj_abr$add_abbrev(psAbbrev="WSDL", psMeaning="Web Services Description Language")` Dateien)
 - eine Testplatform
 
 {Aufgrund der Email von Bert van 't Land vom 13.05.2016 ist diese Webseite unter: \url{https://icar-web.atlassian.net/wiki/display/ADE/ICAR+ADE+public+information} erreichbar. Von dort können ohne Login die Spezifikation und die WSDL-Dateien heruntergeladen werden.}
@@ -290,18 +271,22 @@ Die Tools, welche die Umsetzung vereinfachen sollen, beinhalten
 robjSecEnum$displayNumSection("### ADE Implementation")
 ```
 
-Das nachfolgende Diagramm beschreibt den Prozess des Datenaustauschs
+Das nachfolgende Diagramm beschreibt den Prozess der Umsetzung des ICAR-ADE Projekts.
 
 ```{r echo=FALSE, results='asis'}
 rqudocuhelper::insertOdgAsPdf(psOdgFileStem = "OrgSpezDiagramm3", pnPaperWidthScale = 0.5)
 ```
 
-Der oben beschriebene Prozess wird durch eine Nachfrage (business need) ausgelöst. Die Anforderungen (business requirements) sollen das Resultat einer Zusammenarbeit zwischen ICAR und Gerätehersteller sein. Diese sind unabhängig von der Technik oder Technologie, welche zur Umsetzung verwendet wird. {wahrscheinlich sind hier die Anforderungen gemeint}
+Der oben beschriebene Prozess der Projektumsetzung wird durch eine `r r6obj_transl$add_abbrev(psAbbrev="business need", psMeaning="Nachfrage")` ausgelöst. Die Anforderungen sollen das Resultat einer Zusammenarbeit zwischen ICAR und Gerätehersteller sein. Diese sind unabhängig von der Technik oder Technologie, welche zur Umsetzung verwendet wird. {Hier ist gemeint, dass die Anforderungen unabhängig von der Technologie sind.} 
 
-Zwei Arten der Umsetzung werden hier berücksichtigt
+{Hier liegt wahrscheinlich ein Grund, weshalb das Projekt eingefroren ist. Die hauptsächliche Nachfrage nach einer Lösung bezüglich des Datenaustauschs liegen bei den Bauern und bei den Zuchtorganisationen. Die Melkanlagenanbieter dagegen haben eigene Tools für den Export ihrer Daten und sind zusätzlich am Aufbau von cloud-basierten Datenspeicherkapazitäten. Somit ist die Nachfrage nach einer Lösung für den automatisierten Datenaustausch seitens der Melkanlagenanbieter  nicht sehr gross. In der oben gezeigten Darstellung (Diagram 3) wird angenommen, dass alle beteiligten Parteien (Bauern, Melkanlagenanbieter und Zuchtorganisationen) gemeinsame Bedürfnisse und Anforderungen formulieren können. Diese bilden dann die Basis für den weiteren Verlauf des Projekts. Da diese gemeinsame Basis nicht oder noch nicht existiert, stagniert das Projekt.}
+
+Zwei Arten der Umsetzung werden hier berücksichtigt.
 
 1. W3C und UNCEFACT Standards, als bevorzugte Lösung
 2. ISO (17532 2007) / REST, oder andere Alternativen
+
+{Die beiden Arten der Umsetzung entsprechen in Diagram 3 den beiden grau hinterlegten Boxen, welche  "XML Implementation" und "Alternative Protocols (upcoming)" als Überschrift haben. Es ist korrekt, dass an dieser Stelle beide Umsetzungsarten erwähnt sind. Ein konkreter Umsetzungsvorschlag wird aber nur für die erste Variante gemacht. Was in den kommenden Abschnitten mit W3C Implementierung bezeichnet wird, ist in Diagramm 3 mit "XML Implementation" gekennzeichnet. }
 
 Die W3C Implementierung besteht aus
 
@@ -310,6 +295,8 @@ Die W3C Implementierung besteht aus
 3. Basierend auf der WSDL
     + Umsetzung des Clients durch den Gerätehersteller
     + Umsetzung des Servers durch den Betreiber des Datencenters
+
+{Implizit wird hier eine Verteilung der Projektaufgaben vorgenommen. Die Melkanlagenanbieter werden mit der Umsetzung eines Clients betraut. Der Server soll von einem Betreiber eines Datencenters umgesetzt werden. An dieser Stelle wird also auch schon eine Client-Server-basierte Architektur vorausgesetzt.}
 
 
 ```{r echo=FALSE,results='asis'}
@@ -323,33 +310,34 @@ Das nachfolgende Diagramm beschreibt den Kontext
 rqudocuhelper::insertOdgAsPdf(psOdgFileStem = "OrgSpezDiagramm4")
 ```
 
+\pagebreak
 
-{**Begriff: Dienstleister (Service Provider)**}
+{**Begriff: `r r6obj_transl$add_abbrev(psAbbrev="Service Provider", psMeaning = "Dienstanbieter")`**}
 
-Organisationen {im Diagramm mit ``Service Providers'' bezeichnet und im folgenden mit Dienstleister übersetzt} stellen den Besitzern der Melkgeräte verschiedene Dienste (Services) zur Verfügung. Der Zweck dieser Dienste ist
+Organisationen {im Diagramm mit ``Service Providers'' bezeichnet und im folgenden mit Dienstanbieter übersetzt} stellen den Besitzern der Melkgeräte verschiedene `r r6obj_transl$add_abbrev(psAbbrev="Services", psMeaning="Dienste")` zur Verfügung. Der Zweck dieser Dienste ist
 
 - Registrierung der Daten in einer Datenbank
 - aggregierte Informationen {basierend auf den Daten} zurückzugeben
 
-``Organisationen'' können Organisationen zur Aufzeichnung von Milchdaten, Zuchtorganisationen und andere Datenbankdienstleister sein.
+``Organisationen'' können Organisationen zur Aufzeichnung von Milchdaten, Zuchtorganisationen und andere Datenbankanbieter sein.
 
 +-------------------------------------------------------------------------------------------------------+
-|  Für den Rest dieses Dokuments werden diese Organisationen als ``Dienstleister'' (Service provider)   |
+|  Für den Rest dieses Dokuments werden diese Organisationen als ``Dienstanbieter'' (Service provider)   |
 |  bezeichnet.                                                                                          |
 +-------------------------------------------------------------------------------------------------------+
 
-Der Eigentümer der Melkausrüstung und der Dienstleister müssen folgendes aushandeln
+Der Eigentümer der Melkausrüstung und der Dienstanbieter müssen folgendes aushandeln
 
 - Bedingungen zur Benützung der verfügbaren Dienste
 - benötigte Parameter für den Datenaustausch
 
 Diese Punkte müssen vertraglich geregelt werden.
 
-{**Begriff: Melkausrüstung (milking equipment)**}
+{**Begriff: `r r6obj_abr$add_abbrev(psAbbrev="milking equipment", psMeaning = "Melkausrüstung")`**}
 
 Die Melkausrüstung besteht aus einer Sammlung von Hardware-Komponenten und aus Softwareprogrammen, welche mindestens folgende Funktionen umfassen:
 
-1. Messung der Milchmenge und von anderen Milchparametern (characteristic) {Hier ist nicht klar, was gemeint ist}
+1. Messung der Milchmenge und von anderen `r r6obj_abr$add_abbrev(psAbbrev="milk characteristic", psMeaning="Milchparametern")` {Hier ist nicht klar, was gemeint ist}
 2. Abfüllen von Milchprobenfläschchen und Registrierung der Verbindung zwischen Fläschchen und Tier
 3. Abspeichern der Melkresultate
 4. Verbinden zu, senden an und empfangen von Daten von externen Informationssystemen
@@ -360,7 +348,7 @@ Die Melkausrüstung kann noch andere Funktionalitäten haben, welche von ATDA un
 |  Für den Rest dieses Dokuments werden Melksysteme als ``Ausrüstung'' (Equipment) bezeichnet.          |
 +-------------------------------------------------------------------------------------------------------+
 
-{**Begriff: Melker / Melkoperator (milking operator)**}
+{**Begriff: `r r6obj_abr$add_abbrev(psAbbrev="milking operator", psMeaning="Melker / Melkoperator")`**}
 
 Die Melkausrüstung wird durch einen Melker bedient und überwacht. 
 
@@ -374,23 +362,24 @@ Der Operator ist angestellt und abhängig vom Besitzer der Melkausrüstung. Der 
 - Installation und Entfernen der Milchfläschchen für die Milchproben
 - Versand von Milchprobem an Analyselabors
 
-Verschiedene Personen können die Rolle des Operators übernehmen, so zum Beispiel Bauern, Angestellte auf Bauernhöfen, Techniker von Dienstleistern.
+Verschiedene Personen können die Rolle des Operators übernehmen, so zum Beispiel Bauern, Angestellte auf Bauernhöfen, Techniker von Dienstanbietern.
 
-{**Begriff: Informationssystem (information system)**}
+{**Begriff: `r r6obj_transl$add_abbrev(psAbbrev="information system", psMeaning="Informationssystem")`**}
 
-Der Dienstleister betreibt ein Informationssystem, welches die Dienste anbietet. Das Informationssystem besteht aus Servern, Datenbanken und Softwareprogrammen, welche nicht Teil der Melkausrüstung sind. Das Informationssystem ist über eine Netzwerkverbindung zur Melkausrüstung verbunden. Das Informationssystem hat minimal folgende Funktionen: 
+Der Dienstanbieter betreibt ein Informationssystem, welches die Dienste anbietet. Das Informationssystem besteht aus Servern, Datenbanken und Softwareprogrammen, welche nicht Teil der Melkausrüstung sind. Das Informationssystem ist über eine Netzwerkverbindung zur Melkausrüstung verbunden. Das Informationssystem hat minimal folgende Funktionen: 
 
 1. Empfang und Verarbeitung von Anfragen des Melksystems
 2. Aktualisierung der Datenbank mit den Informationen des Melksystems
 3. Lieferung der Resultate des Milchanalyselabors, welches die vom anfragenden Melksystem gesammelten Proben analysiert hat
 
-Das Informationssystem vom Dienstleister kann andere Funktionen unabhängig von ATDA erfüllen.
+Das Informationssystem vom Dienstanbieter kann andere Funktionen unabhängig von ATDA erfüllen.
 
 +-------------------------------------------------------------------------------------------------------+
-|  Für den Rest dieses Dokuments wird das Informationssystem des Dienstleisters als                     | 
+|  Für den Rest dieses Dokuments wird das Informationssystem des Dienstanbieters als                     | 
 |  ``Informationssystem'' bezeichnet.                                                                   |
 +-------------------------------------------------------------------------------------------------------+
 
+{Die Spezifikation für das zu Informationssystem sind durch die Datentypen in den XSD-Dateien und durch die Interfacebeschreibungen in der WSDL-Datei gegeben. }
 
 ```{r echo=FALSE,results='asis'}
 robjSecEnum$displayNumSection("# Generelle Spezifikation")
@@ -409,27 +398,7 @@ Die WSDL/XSD Dateien beschreiben folgende Aspekte des Transport-Protokolls
 - Definitionen von erweiterten und zusammengesetzten Datentypen
 - Restriktionen (Constraints), d.h. Gültigkeitsbereiche von Datentypen
 
-{Hier wird eine kurze Übersicht zu __WSDL__ (\url{https://de.wikipedia.org/wiki/Web_Services_Description_Language}) und __XSD__ eingeschoben. Eine ausführlichere Beschreibung zum Thema `Webservices` ist im Anhang zu finden. 
-
-WSDL ist eine Sprache zur Beschreibung von Netzwerkdiensten (Webservices). Die Sprache ist unabhängig von Plattform, Programmiersprache und Protokoll. Die beschriebenen Dienste tauschen Nachrichten auf der Basis von XML aus. WSDL beschreibt die angebotenen Funktionen, Daten, Datentypen und Austauschprotokolle eines Webservices. Es werden die Operationen definiert, welche von aussen zugänglich sind, sowie die Parameter und Rückgabewerte dieser Operationen. WSDL enthält funktionale Angaben zu
-
-- der Schnittstelle
-- dem Zugangsprotokoll und Details zum Deployment
-- zu allen notwendigen Informationen für den Zugriff auf den Service. 
-
-Beschreibungselemente sind:
-
-- __types__
-- __message__
-- __portType__
-- __binding__
-- __port__
-- __service__
-
-XSD steht für XML Schema Definition und ist eine von W3C empfohlene Definition von Strukturen für XML-Dokumente. 
-}
-
-\pagebreak
+{Eine kurze Übersicht zu __WSDL__ und __XSD__ ist im Anhang zu finden.}
 
 Die folgende Tabelle gibt eine Übersicht über den Inhalt der angebotenen Definitionsdateien
 
@@ -461,7 +430,7 @@ Die folgende Tabelle gibt eine Übersicht über den Inhalt der angebotenen Defin
 |                  ADE_v1p8.xsd  |  Hauptdatei (entry point) der Definitionen der Datenstrukturen des ICAR ADE |
 +--------------------------------+-----------------------------------------------------------------------------+
 
-In der ICAR ADE Spezifikation sind Definitionen von Daten und Protokollen durch die kommerzielle Software XMLSPY von ALTOVA (http://www.altova.com/documents/XMLSpyPro.pdf) illustriert. Als Beispiel wurde für den Dienst ``GetHerdListRequest'' folgendes Diagramm erstellt
+In der ICAR ADE Spezifikation sind Definitionen von Daten und Protokollen durch die kommerzielle Software XMLSPY von ALTOVA (http://www.altova.com/documents/XMLSpyPro.pdf) illustriert. Als Beispiel wurde für den Dienst ``GetHerdListRequest'' folgendes Diagramm erstellt. 
 
 ```{r echo=FALSE, results='asis'}
 rqudocuhelper::insertOdgAsPdf(psOdgFileStem = "GetHerdListRequestDiagram")
@@ -473,13 +442,14 @@ Die in den Diagrammen verwendeten Symbolen haben folgende Bedeutung
 rqudocuhelper::insertOdgAsPdf(psOdgFileStem = "XMLSpyDiagSymbol")
 ```
 
+{Als Alternative zu XMLSPY lassen sich die XSD- und die WSDL-Dateien auch in Eclipse (https://eclipse.org) visualisieren. Eine kurze Anleitung dazu ist im Anhang dieses Dokuments aufgeführt.}
 
 ```{r echo=FALSE,results='asis'}
 robjSecEnum$displayNumSection("### Alternative Transport Protokolle")
 ```
-Abgesehen von SOAP gibt es andere internationale Transport Protokolle. Als Beispiel gibt es den ISO-Standard  ADIS/ADED, welcher in ISO 17532(2007) beschrieben wurde. {Diese Standards wurden offenbar in [ISOagriNET](http://www.isoagrinet.org/) verwendet. ADIS ist eine Datenbeschreibungssprache und ADED ist ein Daten-Dictionary.} 
+Abgesehen von SOAP gibt es andere internationale Transport Protokolle. Als Beispiel gibt es den ISO-Standard  ADIS/ADED, welcher in ISO 17532(2007) beschrieben wurde. {Diese Standards wurden offenbar in [ISOagriNET](http://www.isoagrinet.org/) verwendet. `r r6obj_abr$add_abbrev(psAbbrev="ADIS", psMeaning="Agricultural Data Interchange Syntax")` ist eine Datenbeschreibungssprache und `r r6obj_abr$add_abbrev(psAbbrev="ADED", psMeaning="Agricultural Data Element Dictionary")` ist ein Daten-Dictionary.} 
 
-Bei den Transportprotokollen hat REST basierend auf dem HTTP unter Verwendung von XML, Jason {müsste eingentlich JSON heissen} und anderen Technologien zum Datentransport eine grössere Verbreitung gefunden.
+Bei den Transportprotokollen hat REST basierend auf dem `r r6obj_abr$add_abbrev(psAbbrev="HTTP", psMeaning="Hypertext Transfer Protocol")` unter Verwendung von XML, Jason {müsste eingentlich `r r6obj_abr$add_abbrev(psAbbrev="JSON", psMeaning="JavaScript Object Notation")` heissen} und anderen Technologien zum Datentransport eine grössere Verbreitung gefunden.
 
 Der Einfachheit halber fokussiert die ICAR Spezifikation zuerst auf SOAP/XML. Die Integration von alternativen Protokollen wird auf später verschoben.
 
@@ -491,7 +461,7 @@ Alle Datenelemente, welche durch die ICAR ADE Spezifikation erzeugt wurden könn
 ```{r echo=FALSE,results='asis'}
 robjSecEnum$displayNumSection("### Externe Datenelemente")
 ```
-Das Ziel des ICAR ADE Standards ist es, wo immer möglich auf andere schon vorhandene Standards von ISO, IANA oder UNCEFACT abzustützen. 
+Das Ziel des ICAR ADE Standards ist es, wo immer möglich auf andere schon vorhandene Standards von ISO, `r r6obj_abr$add_abbrev(psAbbrev="IANA", psMeaning="The Internet Assigned Numbers Authority")` oder UNCEFACT abzustützen. 
 
 **UNCEFACT Daten Typen**
 
@@ -594,7 +564,7 @@ robjSecEnum$displayNumSection("### Austauschparameter")
 ```
 Die Ausrüstung sollte für den Operator ein Interface anbieten, über welches folgende Austauschparameter abgefragt werden können. Für eine bestimmte Diestleistung geht es dabei um folgende Parameter:
 
-* Url des Dienstleisters
+* `r r6obj_abr$add_abbrev(psAbbrev="Url", psMeaning="Unified Resource Locator")` des Dienstanbieters
 * Information zur Authentifizierung (Benutzername/Passwort)
 * Identifikation/Name/Land des Senders und des Empfängers
 * Typ des Ortes (location) {Hier ist nicht klar, was mit Ort gemeint ist}
@@ -603,7 +573,7 @@ Die Ausrüstung sollte für den Operator ein Interface anbieten, über welches f
 * Typ der primären und sekundären Tieridentifikation
 * Weitere Hersteller-spezifische Parameter
 
-Für einen bestimmten Dienstleister sollten die ausgetauschten Parameter gleich sein über alle angebotenen Dienstleisungen. 
+Für einen bestimmten Dienstanbieter sollten die ausgetauschten Parameter gleich sein über alle angebotenen Dienstleisungen. 
 
 
 ```{r echo=FALSE,results='asis'}
@@ -612,21 +582,21 @@ robjSecEnum$displayNumSection("## Zugang zur Dienstleistung")
 Da die Services nicht permanent verfügbar sind, sollte keine Anfrage geschickt werden, bevor nicht die folgenden Voraussetzungen überprüft sind
 
 * Zugang zum Netzwerk
-* Zugang zum Server des Dienstleisters
+* Zugang zum Server des Dienstanbieters
 * Zugang zum Service selber
 
 ```{r echo=FALSE,results='asis'}
 robjSecEnum$displayNumSection("### Datenübertragung")
 ```
-Neue Daten sollten sobald als möglich verarbeitet werden. Solange Daten beim Dienstleister noch nicht verarbeitet werden konnten, soll der Client keine neuen Daten senden. Bei asynchroner Verarbeitung muss der Client auf eine Bestätigung (ticket) von Dienstleister warten.
+Neue Daten sollten sobald als möglich verarbeitet werden. Solange Daten beim Dienstanbieter noch nicht verarbeitet werden konnten, soll der Client keine neuen Daten senden. Bei asynchroner Verarbeitung muss der Client auf eine Bestätigung (ticket) von Dienstanbieter warten.
 
-Bestätigungen sollen nur zu vorgegebenen Zeiten an das Informationssystem geschickt werden. {Diese Aussage ist mir nicht klar. Entweder steht diese einfach isoliert da und dann ist aber nicht klar, weshalb Bestätigungen an das Informationssystem geschickt werden. Aus dem Kontext des vorangegangenen Abschnitts schickt das Informationssystem des Dienstleisters Bestätigungen an den Client und nicht umgekehrt}
+Bestätigungen sollen nur zu vorgegebenen Zeiten an das Informationssystem geschickt werden. {Diese Aussage ist mir nicht klar. Entweder steht diese einfach isoliert da und dann ist aber nicht klar, weshalb Bestätigungen an das Informationssystem geschickt werden. Aus dem Kontext des vorangegangenen Abschnitts schickt das Informationssystem des Dienstanbieters Bestätigungen an den Client und nicht umgekehrt}
 
 Meldungen oder Nachrichten (message), welche den syntaktischen Anforderungen nicht genügen, dürfen nicht gesendet werden.
 
 Sobald Daten in einer Anfrage (request) integriert sind und von einer Antwort (response) beantwortet werden, sollen die Daten als gesendet betrachtet werden.
 
-Dienstleister (Service providers) und Clients (consumers) sollten Datenupdates und Löschungen verarbeiten können. Der Dienstleister muss auch berücksichtigen, dass der Client die Updates als Neuerfassung von Daten deklariert, da der Client nicht wissen kann, welche Daten schon vorhanden sind. {Der Client kann die History der Operationen nicht wissen, deshalb macht die Operation des Updates aus Sicht des Clients keinen Sinn.}
+Dienstanbieter (Service providers) und Clients (consumers) sollten Datenupdates und Löschungen verarbeiten können. Der Dienstanbieter muss auch berücksichtigen, dass der Client die Updates als Neuerfassung von Daten deklariert, da der Client nicht wissen kann, welche Daten schon vorhanden sind. {Der Client kann die History der Operationen nicht wissen, deshalb macht die Operation des Updates aus Sicht des Clients keinen Sinn.}
 
 Die Vorbereitung einer Anfrage (request) gemäss den gestellten Anforderungen (business requirements) sollte unabhängig von der Zusammenstellung einer Nachricht (message) deren Syntax von der gewählten Technologie (SOAP) abhängt, gemacht werden.
 
@@ -644,7 +614,7 @@ Zur Minimierung der Netzwerkauslastung sollen grosse Nachrichten komprimiert wer
 ```{r echo=FALSE,results='asis'}
 robjSecEnum$displayNumSection("## Datenverarbeitung")
 ```
-Dienste können in "real time" oder "verzögert" (time differed) angeboten werden. Antworten sollen innerhalb von wenigen Sekunden geschickt werden. Alle Requests und alle Antworten sollen von der Ausrüstung und vom Informationssystem gespeichert werden. Die Anforderungen für Updates auf der Datenbank kann sich zwischen Dienstleistern unterscheiden. Alle Anfrage, welche nicht konform sind zu den folgenden Bedingungen sollen nicht verarbeitet werden. Folgende Konformitätsbedingungen sollen berücksichtigt werden:
+Dienste können in "real time" oder "verzögert" (time differed) angeboten werden. Antworten sollen innerhalb von wenigen Sekunden geschickt werden. Alle Requests und alle Antworten sollen von der Ausrüstung und vom Informationssystem gespeichert werden. Die Anforderungen für Updates auf der Datenbank kann sich zwischen Dienstanbietern unterscheiden. Alle Anfrage, welche nicht konform sind zu den folgenden Bedingungen sollen nicht verarbeitet werden. Folgende Konformitätsbedingungen sollen berücksichtigt werden:
 
 * korrekte Syntax
 * korrekte Authentifizierung
@@ -884,10 +854,9 @@ robjSecEnum$displayNumSection("# Beschreibung der Dienste (Service Description)"
 3. Reproduktion
 4. Technische Dienste
 
-Für den Austausch von Milchleistungsdaten sind vor allem die Dienste der ersten Gruppe relevant. Die Dienste rund um die Bewegungen der Tiere zwischen Standorten werden umgesetzt, um unterschiedliche Datenbestände zwischen ISMs und zentralen Datenbanken abzugleichen.
+Für den Austausch von Milchleistungsdaten sind vor allem die Dienste der ersten Gruppe relevant. Die Dienste rund um die Bewegungen der Tiere zwischen Standorten werden umgesetzt, um unterschiedliche Datenbestände zwischen ISMs und zentralen Datenbanken abzugleichen.}
 
 
-}
 ```{r echo=FALSE,results='asis'}
 robjSecEnum$displayNumSection("## Melkvorgang (Milking)")
 ```
@@ -948,7 +917,7 @@ Dieser Dienst (Service) soll dem Eigentümer der Melkausrüstung erlauben, dass 
 
 __Beschreibung der Anfrage__
 
-Diese Nachricht wird verwendet, um neue oder geänderte Daten von Melk-Ereignissen zum Dienstleister zu übermitteln
+Diese Nachricht wird verwendet, um neue oder geänderte Daten von Melk-Ereignissen zum Dienstanbieter zu übermitteln
 
 ```{r UpdateMilkingResultRequestDiagram}
 rqudocuhelper::insertOdgAsPdf(psOdgFileStem = "UpdateMilkingResultRequest")
@@ -1044,12 +1013,12 @@ Der Business-Prozess `Austausch von Tierdaten` (Exchange of Animal Data) soll fo
 Der Tierdatenaustausch stellt verschiedene Methoden zur Verfügung, welche helfen sollen die Daten auf der Melkausrüstung und im Betriebs-Managment-System synchron zu halten.
 
 * __GetHerdList__: Initialisierung der Tierlisten auf dem IS der Melkausrüstrung oder auf dem BMS
-* __GetAnimal__: Beschreibung des Tieres vom Dienstleister
-* __UpdateAnimal__: Übermittlung der Tierbeschreibung and den Dienstleister
-* __GetArrival__: Anfordern der Ankunftsänderungen (arrival changes) vom Dienstleister
-* __UpdateArrival__: Übermitteln der Ankunftsänderungen an den Dienstleister
-* __GetDeparture__: Anfordern der Abgangsänderungen (departure changes) vom Dienstleister
-* __UpdateDeparture__: Übermitteln der Abgangsänderungen an den Dienstleister
+* __GetAnimal__: Beschreibung des Tieres vom Dienstanbieter
+* __UpdateAnimal__: Übermittlung der Tierbeschreibung and den Dienstanbieter
+* __GetArrival__: Anfordern der Ankunftsänderungen (arrival changes) vom Dienstanbieter
+* __UpdateArrival__: Übermitteln der Ankunftsänderungen an den Dienstanbieter
+* __GetDeparture__: Anfordern der Abgangsänderungen (departure changes) vom Dienstanbieter
+* __UpdateDeparture__: Übermitteln der Abgangsänderungen an den Dienstanbieter
 
 
 ```{r echo=FALSE,results='asis'}
@@ -1214,14 +1183,14 @@ robjSecEnum$displayNumSection("### Servicebeschreigung: UpdateHerdList")
 
 __Zweck__
 
-Erlaubt dem Eigentümer der Melkanlage Änderungen in der Herdenliste, inklusive Bewegungsdaten und Reproduktionsdaten an den Dienstleister zu übermitteln.
+Erlaubt dem Eigentümer der Melkanlage Änderungen in der Herdenliste, inklusive Bewegungsdaten und Reproduktionsdaten an den Dienstanbieter zu übermitteln.
 
 
 __Anfragebeschreibung__
 
 Die Nachricht __UpdateHerdListRequest__ ist konsisten mit den allgemeinen Spezifikationen für Anfragen. 
 
-Der Container __HerdListMessage__ beinhaltet eine Standortangabe (Location), eine Liste von Tierbeschreibungen, welche an den Dienstleister übermittelt werden sollen.
+Der Container __HerdListMessage__ beinhaltet eine Standortangabe (Location), eine Liste von Tierbeschreibungen, welche an den Dienstanbieter übermittelt werden sollen.
 
 ```{r UpdateHerdList}
 rmddochelper::insertOdgAsPdf(psOdgFileStem = "UpdateHerdList")
@@ -1229,7 +1198,7 @@ rmddochelper::insertOdgAsPdf(psOdgFileStem = "UpdateHerdList")
 
 __Antwortbeschreibung__
 
-Die Nachricht __UpdateHerdListResponse__ wird verwendet um den Status der Verarbeitung der Herdenlistendaten durch den Dienstleister zu empfangen.
+Die Nachricht __UpdateHerdListResponse__ wird verwendet um den Status der Verarbeitung der Herdenlistendaten durch den Dienstanbieter zu empfangen.
 
 ```{r UpdateHerdListResponse}
 rmddochelper::insertOdgAsPdf(psOdgFileStem = "UpdateHerdListResponse")
@@ -1292,7 +1261,7 @@ rmddochelper::insertOdgAsPdf(psOdgFileStem = "AnimalDetail")
 
 __Antwortbeschreibung__
 
-Nachricht __UpdateAnimalResponse__ wird verwendet den Verarbeitungsstatus  für Daten eines Tieres vom Dienstleister zu erhalten.
+Nachricht __UpdateAnimalResponse__ wird verwendet den Verarbeitungsstatus  für Daten eines Tieres vom Dienstanbieter zu erhalten.
 
 ```{r UpdateAnimalResponse}
 rmddochelper::insertOdgAsPdf(psOdgFileStem = "UpdateAnimalResponse")
@@ -1392,8 +1361,48 @@ robjSecEnum$displayNumSection("### Servicebeschreigung: UpdateDepartures")
 
 ```{r echo=FALSE,results='asis'}
 robjSecEnum$displayNumSection("## Austausch von Reproduktions-Ereignissen")
+robjSecEnum$displayNumSection("### Anforderungen, Dienste und Nachrichten")
+```
+Die Überwachung und die Kontrolle der Reproduktion ist sehr wichtig in der Nutztierzucht. Dies basiert auf der Registrierung und auf der Analyse der folgenden Ereignisse
+
+- Brunst
+- Künstliche Besamung
+- Natursprung
+- Trächtigkeitskontrolle
+- Abtreibung
+- Trächtigkeit
+- Trockenstellung
+
+Bauern müssen
+
+- alle Ereignisse erfassen, damit das AMS den Melkvorgang richtig steuern und kontrollieren kann
+- Brunstbeobachtungen und Trächtigkeiten, welche von spezialisierten Geräten erfasst werden, müssen an das AMS übermittelt werden
+- manuell erfasste Ereignisse müssen an das AMS übermittelt werden
+
+Genaue Überwachung der Reproduktion verlangt die Erfassung und die Übermittlung der Zeit zusätzlich zum Datum, in welchem das Ereignis auftritt.
+
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("### Dienstbeschreibung: GETREPRODUCTIONEVENTS")
 ```
 
+__Zweck__ Erfassung der Reproduktions-Ereignisse.
+
+__Anforderung__ `GetReproductionEventRequest` ist kompatibel mit der allgemeinen Spezifikation von Anfragen.
+
+```{r GetReproductionEventRequest}
+rmddochelper::insertOdgAsPdf(psOdgFileStem = "GetReproductionEventRequest")
+```
+
+Die Komponente `ReproductionEventsRequest` enthält die Parameter der Anfrage.
+
+```{r ParameterReproductionEventRequest}
+rmddochelper::insertOdgAsPdf(psOdgFileStem = "ParameterReproductionEventRequest")
+```
+
+Die Parameter beinhalten
+
+- eine Zeitperiode
 
 ```{r echo=FALSE,results='asis'}
 robjSecEnum$displayNumSection("## Technische Dienste")
@@ -1405,13 +1414,13 @@ robjSecEnum$displayNumSection("## Technische Dienste")
 ```{r echo=FALSE,results='asis'}
 robjSecEnum$displayNumSection("# Datenverzeichnis")
 ```
-Die `xsd`-Dateien gelten als primäres Datenverzeichnis. Beschreibungen von Datenelementen müssen in den `xsd`-Dateien mittels `xsd:document`-Elementen zur Verfügung gestellt werden. Der folgende Ausschnitt gibt eine Beispiel für eine solche Beschreibung
+Die `xsd`-Dateien gelten als primäres `r r6obj_transl$add_abbrev(psAbbrev="data dictionary", psMeaning="Datenverzeichnis")`. Beschreibungen von Datenelementen müssen in den `xsd`-Dateien mittels `xsd:document`-Elementen zur Verfügung gestellt werden. Der folgende Ausschnitt gibt eine Beispiel für eine solche Beschreibung
 
 ```{r XsdExample}
 rmddochelper::insertOdgAsPdf(psOdgFileStem = "XsdExample")
 ```
 
-Aus den `xsd`-Dateien können html-Seiten erzeugt werden.
+Aus den `xsd`-Dateien können html-Seiten erzeugt werden. In der Originalversion wurde das mit XMLSpy gemacht. Das Datenverzeichnis wird auf der ICAR-ADE Webseite publiziert werden.
 
 
 \pagebreak
@@ -1422,39 +1431,111 @@ robjSecEnum$displayNumSection("# Anhang")
 ```
 
 
-{Die folgende Übersicht zum Thema Web Service ist nicht Teil der ursprünglichen Spezifikation}
+{Die folgende Übersichten zu den Themen WSDL, XSD und Web Service sind nicht Teil der ursprünglichen Spezifikation}
 
 ```{r echo=FALSE,results='asis'}
-robjSecEnum$displayNumSection("# Web Service")
+robjSecEnum$displayNumSection("## WSDL und XSD")
 ```
 
-```{r WebserviceAbbreviations, results='asis'}
-r6obj_abr <- rmddochelper::R6ClassTableAbbrev$new()
-r6obj_abr$setColHeader(pvColHeader = c("Abkürzung", "Bedeutung"))
-r6obj_abr$setAbbrTitle(psAbbrTitle = "## Webservice Abkürzungen")
-r6obj_abr$include_abbr_table()
-```
+Hier wird eine kurze Übersicht zu __WSDL__ (\url{https://de.wikipedia.org/wiki/Web_Services_Description_Language}) und __XSD__ eingeschoben. Eine ausführlichere Beschreibung zum Thema `Webservices` ist in einem separaten Unterabschnitt des Anhangs zu finden. 
+
+WSDL ist eine Sprache zur Beschreibung von Netzwerkdiensten (Webservices). Die Sprache ist unabhängig von Plattform, Programmiersprache und Protokoll. Die beschriebenen Dienste tauschen Nachrichten auf der Basis von XML aus. WSDL beschreibt die angebotenen Funktionen, Daten, Datentypen und Austauschprotokolle eines Webservices. Es werden die Operationen definiert, welche von aussen zugänglich sind, sowie die Parameter und Rückgabewerte dieser Operationen. WSDL enthält funktionale Angaben zu
+
+- der Schnittstelle
+- dem Zugangsprotokoll und Details zum Deployment
+- zu allen notwendigen Informationen für den Zugriff auf den Service. 
+
+Beschreibungselemente sind:
+
+- __types__
+- __message__
+- __portType__
+- __binding__
+- __port__
+- __service__
+
+XSD steht für XML Schema Definition und ist eine von W3C empfohlene Definition von Strukturen für XML-Dokumente. 
+
+\pagebreak
 
 ```{r echo=FALSE,results='asis'}
-robjSecEnum$displayNumSection("## Motivation")
+robjSecEnum$displayNumSection("## XSD/WSDL-Dateien in Eclipse")
+```
+Die graphischen Darstellungen der XSD- und WSDL-Dateien wurden in der Originalversion der Spezifikation mit dem kommerziellen Programm XMLSpy von Altova erstellt. Die open-source Entwicklungsumgebung Eclipse bietet auch gewisse Möglichkeiten XSD- und WSDL-Dateien graphisch darzustellen. Diese Möglichkeiten lassen sich einfach aufgrund des in Eclipse integrierten Beispiel-Projekts "Editing and Validating XML Document Example" aufzeigen.
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("### Erstellung eines Beispielprojekts")
+```
+Ein Beispielprojekt wird mit dem Projekt-Wizard erzeugt. 
+
+```{r ExampleProjectWizard}
+rmddochelper::insertOdgAsPdf(psOdgFileStem = "ExampleProjectWizard")
+```
+
+Durch das Öffnen des Beispielprojektes wurden Daten in den aktuellen Workspace von Eclipse kopiert. Im Unterverzeichnis "PublicationCatalogue" befindet sich die Datei "Catalogue.xsd"
+
+```{r ExampleProjectContent}
+rmddochelper::insertOdgAsPdf(psOdgFileStem = "ExampleProjectContent")
+```
+
+Durch einen Doppel-click auf "Catalogue.xsd" wird die Datei geöffnet. Der Dateiinhalt kann in zwei verschiedenen Ansichten betrachtet werden. In der "Source"-Ansicht erscheint der Dateiinhalt als XML-Datei. In der "Design"-Ansicht wird der Dateiinhalt graphisch dargestellt. In der graphischen Darstellung wird der Dateiinhalt in fünf verschiedene Sektoren unterteilt
+
+1. Directives
+2. Elements
+3. Types
+4. Attributes
+5. Groups
+
+```{r GraphCatalogueXsd}
+rmddochelper::insertOdgAsPdf(psOdgFileStem = "GraphCatalogueXsd")
+```
+
+Die unterstrichenen Elemente im oben gezeigten Screenshot sind aktiv und können per Doppel-Click noch weitere Informationen zum Vorschein bringen. Mit dem Home-Button oben rechts gelangt man wieder zurück zur ursprünglichen Ansicht.
+
+\pagebreak
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("## Web Service")
+```
+
+
+```{r echo=FALSE,results='asis'}
+robjSecEnum$displayNumSection("### Motivation")
 ```
 
 Durch den laufend steigenden Grad der Vernetzung kam schon früh der Wunsch auf Programme von einem Client aus auf einem Remote-Server ausführen zu können. Der Wunsch wurde einerseits durch die gesteigerte Effizienz, wenn Programme nur einmal geschrieben werden müssen und dann von vielen Clients ausgeführt werden können und andererseits können so auch zentralisierte Resourcen and verteilte Clients verfügbar gemacht werden.
 
 ```{r echo=FALSE,results='asis'}
-robjSecEnum$displayNumSection("## Hintergrund")
+robjSecEnum$displayNumSection("### Hintergrund")
 ```
 Vorläufer von Webservices, die da hiessen `r r6obj_abr$add_abbrev(psAbbrev = "RPC", psMeaning = "remote procedure call")` oder `r r6obj_abr$add_abbrev(psAbbrev = "RMI", psMeaning = "remote method invocation")` hatten den oben formulierten Wunsch schon realisiert. Diese Ansätze waren aber wenig flexibel. Schliesslich wurden sie durch Web services abgelöst. 
 
 ```{r echo=FALSE,results='asis'}
-robjSecEnum$displayNumSection("## Architektur")
+robjSecEnum$displayNumSection("### Architektur")
 ```
 Webservices orientieren sich an der sogenannten `r r6obj_abr$add_abbrev(psAbbrev = "SOA", psMeaning = "serviceorientierten Architektur")`. Der Begriff SOA ist nicht einheitlich definiert. Eine mögliche Definition, welche aus `r knitcitations::citet("10.1007/978-3-8274-2550-8")` entnommen wurde, lautet: "Unter einer SOA versteht man eine Systemarchitektur, die vielfältige und eventuell inkompatible Methoden oder Applikationen als wiederverwendbare und offen zugreifbare Dienste repräsentiert und dadurch eine plattform- und sprachunabhängige Nutzung und Wiederverwendung ermöglicht." 
 
 ```{r echo=FALSE,results='asis'}
-robjSecEnum$displayNumSection("## Web-Services Grundlagen")
+robjSecEnum$displayNumSection("### Web-Services Grundlagen")
 ```
 `r r6obj_abr$add_abbrev(psAbbrev = "SOAP", psMeaning = "Simple Object Access Protocol")`, `r r6obj_abr$add_abbrev(psAbbrev = "WSDL", psMeaning = "Web Service Description Language")` und `r r6obj_abr$add_abbrev(psAbbrev = "UDDI", psMeaning = "Universal Description Discovery and Integration")` können als Grundlage oder als Basis eines Web-Service betrachtet werden. Diese stellen Umsetzungen der drei wichtigsten Komponenten einer SOA dar.
+
+\pagebreak
+
+```{r WriteAbrToFile, echo=FALSE}
+if (!r6obj_abr$is_empty_abbr()) r6obj_abr$writeToTsvFile()
+```
+
+```{r TableOfAbbreviations, results='asis'}
+r6obj_abr$include_abbr_table(psAbbrTitle = "# Abkürzungen")
+```
+
+\pagebreak
+
+```{r TableOfTranslations, results='asis'}
+if (!r6obj_transl$is_empty_abbr()) r6obj_transl$writeToTsvFile()
+r6obj_transl$include_abbr_table(psAbbrTitle = "# Übersetzungen")
+```
 
 \pagebreak
 
@@ -1475,7 +1556,13 @@ if (!file.exists(sBibFile)) {
   
 ```
 
-```{r WriteAbrToFile, echo=FALSE}
-if (!r6obj_abr$is_empty_abbr()) r6obj_abr$writeToTsvFile()
-```
+
+
+
+
+
+
+
+
+
 
